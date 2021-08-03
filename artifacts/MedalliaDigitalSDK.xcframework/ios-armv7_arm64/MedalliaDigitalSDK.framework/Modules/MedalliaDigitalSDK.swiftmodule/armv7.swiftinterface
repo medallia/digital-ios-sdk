@@ -1,0 +1,160 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.1 (swiftlang-1100.0.270.13 clang-1100.0.33.7)
+// swift-module-flags: -target armv7-apple-ios9.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name MedalliaDigitalSDK
+import AdSupport
+import Compression
+import CoreData
+import CoreFoundation
+import CoreTelephony
+import Darwin
+import Dispatch
+import Foundation
+import JavaScriptCore
+import Security
+import StoreKit
+import Swift
+import SystemConfiguration
+import UIKit.UIApplication
+import UIKit.UIDevice
+import UIKit
+import WebKit
+import zlib
+@objc @objcMembers public class MedalliaDigital : ObjectiveC.NSObject {
+  @objc public static func sdkInit(token: Swift.String, success: @escaping () -> Swift.Void, failure: @escaping (MedalliaDigitalSDK.MDExternalError) -> Swift.Void)
+  @objc public static func setCustomParameter(name: Swift.String, value: Any)
+  @objc public static func setCustomParameters(_ parameters: [Swift.String : Any])
+  @objc public static func showForm(_ formId: Swift.String, success: @escaping () -> Swift.Void, failure: @escaping (MedalliaDigitalSDK.MDExternalError) -> Swift.Void)
+  @objc public static func handleNotification(_ formId: Swift.String, success: @escaping () -> Swift.Void, failure: @escaping (MedalliaDigitalSDK.MDExternalError) -> Swift.Void)
+  @objc public static func setFormDelegate(_ formDelegate: MedalliaDigitalSDK.MDFormDelegate?)
+  @objc @available(*, deprecated, message: "This method is deprecate, please use setInterceptDelegate(MDInterceptDelegate)")
+  public static func setInvitationDelegate(_ invitationDelegate: MedalliaDigitalSDK.MDInvitationDelegate?)
+  @objc @available(*, deprecated, message: "This method is deprecate, please use setInterceptV3Delegate(MDInterceptV3Delegate)")
+  public static func setInterceptDelegate(_ interceptDelegate: MedalliaDigitalSDK.MDInterceptDelegate?)
+  @objc public static func setInterceptV3Delegate(_ interceptV3Delegate: MedalliaDigitalSDK.MDInterceptV3Delegate?)
+  @objc public static func setFeedbackDelegate(_ feedbackDelegate: MedalliaDigitalSDK.MDFeedbackDelegate?)
+  @objc public static func setFeedbackV2Delegate(_ feedbackV2Delegate: MedalliaDigitalSDK.MDFeedbackV2Delegate?)
+  @objc public static func enableIntercept()
+  @objc public static func disableIntercept()
+  @objc public static func setLogLevel(_ logLevel: MedalliaDigitalSDK.MDLogLevel)
+  @objc public static func stopSDK(clearData: Swift.Bool = false)
+  @objc public static func revertStopSDK()
+  @objc public static func setSdkFramework(_ mdSdkFrameworkType: MedalliaDigitalSDK.MDSDKFrameworkType)
+  @objc public static func updateCustomLocale(_ locale: Swift.String?, success: @escaping (Swift.String?) -> Swift.Void, failure: @escaping (MedalliaDigitalSDK.MDExternalError) -> Swift.Void)
+  @objc deinit
+}
+@available(swift, deprecated: 3.7.0, message: "Please use MDFeedbackDelegateV2 protocol instead")
+@objc public protocol MDFeedbackDelegate {
+  @available(swift, deprecated: 3.7.0, message: "Please use feedbackDidSubmit of MDFeedbackDelegateV2 protocol instead")
+  @objc optional func feedbackDidSubmit(timestamp: Swift.Double, feedbackUUID: Swift.String, payload: [Swift.String : Any])
+}
+extension UIImage {
+  public class func gif(data: Foundation.Data) -> UIKit.UIImage?
+  public class func gif(url: Swift.String) -> UIKit.UIImage?
+  public class func gif(name: Swift.String) -> UIKit.UIImage?
+  @available(iOS 9.0, *)
+  public class func gif(asset: Swift.String) -> UIKit.UIImage?
+}
+extension Data {
+  public func gunzipped() -> Foundation.Data?
+}
+@available(swift, deprecated: 3.1.0, message: "Please use MDInteceptDelegate protocol instead")
+@objc public protocol MDInvitationDelegate {
+  @available(swift, deprecated: 3.1.0, message: "Please use interceptDidDisplay of MDInteceptDelegate protocol instead")
+  @objc optional func invitationDidDisplay(timestamp: Swift.Double, formId: Swift.String)
+  @available(swift, deprecated: 3.1.0, message: "Please use interceptidAccept of MDInteceptDelegate protocol instead")
+  @objc optional func invitationDidAccept(timestamp: Swift.Double, formId: Swift.String)
+  @available(swift, deprecated: 3.1.0, message: "Please use interceptDidDecline of MDInteceptDelegate protocol instead")
+  @objc optional func invitationDidDecline(timestamp: Swift.Double, formId: Swift.String)
+  @available(swift, deprecated: 3.1.0, message: "Please use interceptDidDefer of MDInteceptDelegate protocol instead")
+  @objc optional func invitationDidDefer(timestamp: Swift.Double, formId: Swift.String)
+}
+@objc public class MDExternalError : ObjectiveC.NSObject, Swift.Error {
+  @objc public var statusCode: Swift.Int
+  @objc public var message: Swift.String
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc public protocol MDFormDelegate {
+  @objc optional func formDidSubmit(timestamp: Swift.Double, formId: Swift.String, formTriggerType: MedalliaDigitalSDK.MDFormTriggerType)
+  @objc optional func formDidDismiss(timestamp: Swift.Double, formId: Swift.String, formTriggerType: MedalliaDigitalSDK.MDFormTriggerType)
+  @objc optional func formDidClose(timestamp: Swift.Double, formId: Swift.String, formTriggerType: MedalliaDigitalSDK.MDFormTriggerType)
+  @available(*, deprecated, message: "This method is deprecate, please use formDidDisplayV2(timestamp, formId, formTriggerType, formLocaleSet, formLocaleDisplay)")
+  @objc optional func formDidDisplay(timestamp: Swift.Double, formId: Swift.String, formTriggerType: MedalliaDigitalSDK.MDFormTriggerType)
+  @objc optional func formDidDisplayV2(timestamp: Swift.Double, formId: Swift.String, formTriggerType: MedalliaDigitalSDK.MDFormTriggerType, formLocaleSet: Swift.String?, formLocaleDisplay: Swift.String?)
+  @objc optional func formDidBlockExternalUrl(timestamp: Swift.Double, formId: Swift.String, formTriggerType: MedalliaDigitalSDK.MDFormTriggerType, blockedUrl: Swift.String)
+  @objc optional func formDidLinkSelect(timestamp: Swift.Double, formId: Swift.String, formTriggerType: MedalliaDigitalSDK.MDFormTriggerType, url: Swift.String, isBlocked: Swift.Bool)
+  @objc optional func formDidThankYouPrompt(timestamp: Swift.Double, engagementId: Swift.String, formTriggerType: MedalliaDigitalSDK.MDFormTriggerType)
+}
+@objc public protocol MDInterceptDelegate {
+  @objc optional func interceptDidDisplay(timestamp: Swift.Double, interceptId: Swift.String, engagementType: MedalliaDigitalSDK.MDEngagementType)
+  @objc optional func interceptDidAccept(timestamp: Swift.Double, interceptId: Swift.String, engagementType: MedalliaDigitalSDK.MDEngagementType)
+  @objc optional func interceptDidDecline(timestamp: Swift.Double, interceptId: Swift.String, engagementType: MedalliaDigitalSDK.MDEngagementType)
+  @objc optional func interceptDidDefer(timestamp: Swift.Double, interceptId: Swift.String, engagementType: MedalliaDigitalSDK.MDEngagementType)
+  @objc optional func interceptDidTriggerSKStoreReviewController(timestamp: Swift.Double, interceptId: Swift.String)
+}
+@objc public protocol MDInterceptV3Delegate {
+  @objc optional func interceptDidDisplay(timestamp: Swift.Double, engagementId: Swift.String, engagementType: MedalliaDigitalSDK.MDEngagementType)
+  @objc optional func interceptDidAccept(timestamp: Swift.Double, engagementId: Swift.String, engagementType: MedalliaDigitalSDK.MDEngagementType)
+  @objc optional func interceptDidDecline(timestamp: Swift.Double, engagementId: Swift.String, engagementType: MedalliaDigitalSDK.MDEngagementType)
+  @objc optional func interceptDidDefer(timestamp: Swift.Double, engagementId: Swift.String, engagementType: MedalliaDigitalSDK.MDEngagementType)
+  @objc optional func interceptDidTriggerSKStoreReviewController(timestamp: Swift.Double, interceptId: Swift.String)
+}
+@objc public protocol MDFeedbackV2Delegate {
+  @objc optional func feedbackDidSubmit(timestamp: Swift.Double, feedbackClientCorrelationId: Swift.String, payload: [Swift.String : Any])
+}
+@objc public enum MDLogLevel : Swift.Int, Swift.CaseIterable {
+  case off
+  case fatal
+  case error
+  case warn
+  case info
+  case debug
+  public func stringRepresentation() -> Swift.String
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [MedalliaDigitalSDK.MDLogLevel]
+  public static var allCases: [MedalliaDigitalSDK.MDLogLevel] {
+    get
+  }
+}
+@objc public enum MDFormTriggerType : Swift.Int {
+  case code = 0
+  case invite = 1
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum MDEngagementType : Swift.Int {
+  case form = 0
+  case appRating = 1
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+}
+@objc public enum MDSDKFrameworkType : Swift.Int {
+  case native = 0
+  case reactNative = 1
+  case cordova = 2
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension MedalliaDigitalSDK.MDLogLevel : Swift.Hashable {}
+extension MedalliaDigitalSDK.MDLogLevel : Swift.RawRepresentable {}
+extension MedalliaDigitalSDK.MDFormTriggerType : Swift.Equatable {}
+extension MedalliaDigitalSDK.MDFormTriggerType : Swift.Hashable {}
+extension MedalliaDigitalSDK.MDFormTriggerType : Swift.RawRepresentable {}
+extension MedalliaDigitalSDK.MDEngagementType : Swift.Hashable {}
+extension MedalliaDigitalSDK.MDEngagementType : Swift.RawRepresentable {}
+extension MedalliaDigitalSDK.MDSDKFrameworkType : Swift.Equatable {}
+extension MedalliaDigitalSDK.MDSDKFrameworkType : Swift.Hashable {}
+extension MedalliaDigitalSDK.MDSDKFrameworkType : Swift.RawRepresentable {}
