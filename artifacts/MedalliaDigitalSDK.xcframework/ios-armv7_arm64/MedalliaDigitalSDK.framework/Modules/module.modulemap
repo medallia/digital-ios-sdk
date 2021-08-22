@@ -1,4 +1,0 @@
-framework module MedalliaDigitalSDK {
-  header "MedalliaDigitalSDK-Swift.h"
-  requires objc
-}
