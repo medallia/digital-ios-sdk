@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.4 (swiftlang-1205.0.26.9 clang-1205.0.19.55)
+// swift-compiler-version: Apple Swift version 5.5 (swiftlang-1300.0.31.1 clang-1300.0.29.1)
 // swift-module-flags: -target i386-apple-ios9.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name MedalliaDigitalSDK
 import AdSupport
 import Compression
@@ -18,13 +18,14 @@ import UIKit.UIApplication
 import UIKit.UIDevice
 import UIKit
 import WebKit
+import _Concurrency
 import zlib
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class MedalliaDigital : ObjectiveC.NSObject {
-  @objc public static func sdkInit(token: Swift.String, success: @escaping () -> Swift.Void, failure: @escaping (MedalliaDigitalSDK.MDExternalError) -> Swift.Void)
+  @objc public static func sdkInit(token: Swift.String, success: @escaping () -> Swift.Void, failure: @escaping (_ error: MedalliaDigitalSDK.MDExternalError) -> Swift.Void)
   @objc public static func setCustomParameter(name: Swift.String, value: Any)
   @objc public static func setCustomParameters(_ parameters: [Swift.String : Any])
-  @objc public static func showForm(_ formId: Swift.String, success: @escaping () -> Swift.Void, failure: @escaping (MedalliaDigitalSDK.MDExternalError) -> Swift.Void)
-  @objc public static func handleNotification(_ formId: Swift.String, success: @escaping () -> Swift.Void, failure: @escaping (MedalliaDigitalSDK.MDExternalError) -> Swift.Void)
+  @objc public static func showForm(_ formId: Swift.String, success: @escaping () -> Swift.Void, failure: @escaping (_ error: MedalliaDigitalSDK.MDExternalError) -> Swift.Void)
+  @objc public static func handleNotification(_ formId: Swift.String, success: @escaping () -> Swift.Void, failure: @escaping (_ error: MedalliaDigitalSDK.MDExternalError) -> Swift.Void)
   @objc public static func setFormDelegate(_ formDelegate: MedalliaDigitalSDK.MDFormDelegate?)
   @objc @available(*, deprecated, message: "This method is deprecate, please use setInterceptDelegate(MDInterceptDelegate)")
   public static func setInvitationDelegate(_ invitationDelegate: MedalliaDigitalSDK.MDInvitationDelegate?)
@@ -40,8 +41,8 @@ import zlib
   @objc public static func stopSDK(clearData: Swift.Bool = false)
   @objc public static func revertStopSDK()
   @objc public static func setSdkFramework(_ mdSdkFrameworkType: MedalliaDigitalSDK.MDSDKFrameworkType)
-  @objc public static func updateCustomLocale(_ locale: Swift.String?, success: @escaping (Swift.String?) -> Swift.Void, failure: @escaping (MedalliaDigitalSDK.MDExternalError) -> Swift.Void)
-  @objc public static func customInterceptTrigger(engagementId: Swift.String, actionType: MedalliaDigitalSDK.MDInterceptActionType, failure: @escaping (MedalliaDigitalSDK.MDExternalError) -> Swift.Void)
+  @objc public static func updateCustomLocale(_ locale: Swift.String?, success: @escaping (_ message: Swift.String?) -> Swift.Void, failure: @escaping (_ error: MedalliaDigitalSDK.MDExternalError) -> Swift.Void)
+  @objc public static func customInterceptTrigger(engagementId: Swift.String, actionType: MedalliaDigitalSDK.MDInterceptActionType, failure: @escaping (_ error: MedalliaDigitalSDK.MDExternalError) -> Swift.Void)
   @objc deinit
 }
 @available(swift, deprecated: 3.7.0, message: "Please use MDFeedbackDelegateV2 protocol instead")
@@ -49,14 +50,14 @@ import zlib
   @available(swift, deprecated: 3.7.0, message: "Please use feedbackDidSubmit of MDFeedbackDelegateV2 protocol instead")
   @objc optional func feedbackDidSubmit(timestamp: Swift.Double, feedbackUUID: Swift.String, payload: [Swift.String : Any])
 }
-extension UIImage {
+extension UIKit.UIImage {
   public class func gif(data: Foundation.Data) -> UIKit.UIImage?
   public class func gif(url: Swift.String) -> UIKit.UIImage?
   public class func gif(name: Swift.String) -> UIKit.UIImage?
   @available(iOS 9.0, *)
   public class func gif(asset: Swift.String) -> UIKit.UIImage?
 }
-extension Data {
+extension Foundation.Data {
   public func gunzipped() -> Foundation.Data?
 }
 @available(swift, deprecated: 3.1.0, message: "Please use MDInteceptDelegate protocol instead")
@@ -73,7 +74,6 @@ extension Data {
 @_hasMissingDesignatedInitializers @objc public class MDExternalError : ObjectiveC.NSObject, Swift.Error {
   @objc public var statusCode: Swift.Int
   @objc public var message: Swift.String
-  @objc override dynamic public init()
   @objc deinit
 }
 @objc public protocol MDFormDelegate {
@@ -97,13 +97,6 @@ extension Data {
   public var rawValue: Swift.Int {
     get
   }
-}
-@_hasMissingDesignatedInitializers public class PreviewAppBridge {
-  public static let shared: MedalliaDigitalSDK.PreviewAppBridge
-  public func showBanner(onAccepted: @escaping () -> (), onDecline: @escaping () -> (), onDeferred: @escaping () -> ())
-  public func showForm()
-  public func showThankYou()
-  @objc deinit
 }
 @objc public protocol MDInterceptDelegate {
   @objc optional func interceptDidDisplay(timestamp: Swift.Double, interceptId: Swift.String, engagementType: MedalliaDigitalSDK.MDEngagementType)
@@ -158,7 +151,6 @@ extension Data {
   @objc public var provideFeedbackText: Swift.String?
   @objc public var declineText: Swift.String?
   @objc public var deferText: Swift.String?
-  @objc override dynamic public init()
   @objc deinit
 }
 @objc public enum MDEngagementType : Swift.Int {
