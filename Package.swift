@@ -4,22 +4,19 @@
 import PackageDescription
 
 let package = Package(
-    name: "MedalliaPackage",
+    name: "MedalliaDigitalSDK",
     products: [
         .library(
-            name: "MedalliaPackage",
-            targets: ["MedalliaPackage"]),
+            name: "MedalliaDigitalSDK",
+            targets: ["MedalliaDigitalSDK"]),
     ],
     dependencies: [
         
     ],
     targets: [
         .binaryTarget(
-                            name: "MedalliaPackage",
-                            path: "artifacts/MedalliaDigitalSDK.xcframework"
-                        ),
-        .testTarget(
-            name: "MedalliaPackageTests",
-            dependencies: ["MedalliaPackage"]),
+            name: "MedalliaDigitalSDK",
+            path: "artifacts/MedalliaDigitalSDK.xcframework"
+        ),
     ]
 )
