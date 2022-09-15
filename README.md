@@ -9,8 +9,8 @@ Enter Package URL: https://github.com/medallia/Digital-iOS-SDK.
 
 **Note:** You can also navigate to your target’s General pane, and in the “Frameworks, Libraries, and Embedded Content” section, click the + button, select Add Other, and choose Add Package Dependency.
 
-Choose "Exact Version" in Dependcy Rule and enter the Medallia Digital SDK version that you want to use (For example 4.0.2) then click 'Add Package'.
+Choose "Exact Version" in Dependency Rule and enter the Medallia Digital SDK version that you want to use (For example 4.0.2) then click 'Add Package'.
 ![choose-package-options](./Images/choose_package_options.png)
 
-Add the package by cliking on 'Add Package'.
+Add the package by clicking on 'Add Package'.
 ![add-package](./Images/add_package.png)
