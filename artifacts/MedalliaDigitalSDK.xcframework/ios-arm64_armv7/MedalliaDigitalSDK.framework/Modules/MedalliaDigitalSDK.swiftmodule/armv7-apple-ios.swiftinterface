@@ -44,6 +44,7 @@ import zlib
   @objc public static func setCustomAppearance(_ appearanceMode: MedalliaDigitalSDK.MDAppearanceMode)
   @objc public static func setDebugForm(_ debug: Swift.Bool)
   @objc public static func closeEngagement(success: @escaping () -> Swift.Void, failure: @escaping (_ error: MedalliaDigitalSDK.MDExternalError) -> Swift.Void)
+  @objc public static func setUserId(_ userId: Swift.String?)
   @objc deinit
 }
 @objc public protocol MDFeedbackDelegate {
@@ -111,6 +112,7 @@ public protocol PreviewAppBridgeDelegate : AnyObject {
 }
 @objc @_hasMissingDesignatedInitializers @objcMembers public class MDFeedbackDelegateData : ObjectiveC.NSObject {
   @objc public var timestamp: Swift.Double
+  @objc public var engagementId: Swift.String
   @objc public var feedbackClientCorrelationId: Swift.String
   @objc public var payload: [Swift.String : Any]
   @objc deinit

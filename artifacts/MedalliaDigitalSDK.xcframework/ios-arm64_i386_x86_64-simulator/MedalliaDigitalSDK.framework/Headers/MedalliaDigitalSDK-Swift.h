@@ -340,6 +340,7 @@ SWIFT_PROTOCOL("_TtP18MedalliaDigitalSDK18MDFeedbackDelegate_")
 SWIFT_CLASS("_TtC18MedalliaDigitalSDK22MDFeedbackDelegateData")
 @interface MDFeedbackDelegateData : NSObject
 @property (nonatomic) double timestamp;
+@property (nonatomic, copy) NSString * _Nonnull engagementId;
 @property (nonatomic, copy) NSString * _Nonnull feedbackClientCorrelationId;
 @property (nonatomic, copy) NSDictionary<NSString *, id> * _Nonnull payload;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -776,6 +777,10 @@ SWIFT_CLASS("_TtC18MedalliaDigitalSDK15MedalliaDigital")
 /// \param failure failure block
 ///
 + (void)closeEngagementWithSuccess:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(MDExternalError * _Nonnull))failure;
+/// Set User ID
+/// \param userId String
+///
++ (void)setUserId:(NSString * _Nullable)userId;
 @end
 
 
@@ -1132,6 +1137,7 @@ SWIFT_PROTOCOL("_TtP18MedalliaDigitalSDK18MDFeedbackDelegate_")
 SWIFT_CLASS("_TtC18MedalliaDigitalSDK22MDFeedbackDelegateData")
 @interface MDFeedbackDelegateData : NSObject
 @property (nonatomic) double timestamp;
+@property (nonatomic, copy) NSString * _Nonnull engagementId;
 @property (nonatomic, copy) NSString * _Nonnull feedbackClientCorrelationId;
 @property (nonatomic, copy) NSDictionary<NSString *, id> * _Nonnull payload;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -1568,6 +1574,10 @@ SWIFT_CLASS("_TtC18MedalliaDigitalSDK15MedalliaDigital")
 /// \param failure failure block
 ///
 + (void)closeEngagementWithSuccess:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(MDExternalError * _Nonnull))failure;
+/// Set User ID
+/// \param userId String
+///
++ (void)setUserId:(NSString * _Nullable)userId;
 @end
 
 
@@ -1924,6 +1934,7 @@ SWIFT_PROTOCOL("_TtP18MedalliaDigitalSDK18MDFeedbackDelegate_")
 SWIFT_CLASS("_TtC18MedalliaDigitalSDK22MDFeedbackDelegateData")
 @interface MDFeedbackDelegateData : NSObject
 @property (nonatomic) double timestamp;
+@property (nonatomic, copy) NSString * _Nonnull engagementId;
 @property (nonatomic, copy) NSString * _Nonnull feedbackClientCorrelationId;
 @property (nonatomic, copy) NSDictionary<NSString *, id> * _Nonnull payload;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -2360,6 +2371,10 @@ SWIFT_CLASS("_TtC18MedalliaDigitalSDK15MedalliaDigital")
 /// \param failure failure block
 ///
 + (void)closeEngagementWithSuccess:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(MDExternalError * _Nonnull))failure;
+/// Set User ID
+/// \param userId String
+///
++ (void)setUserId:(NSString * _Nullable)userId;
 @end
 
 
