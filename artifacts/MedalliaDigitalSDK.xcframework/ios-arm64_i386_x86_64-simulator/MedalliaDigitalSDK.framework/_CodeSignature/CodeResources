@@ -14,7 +14,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		Wcat+MfIjKNFVBc2Vh0RG0COG8A=
+		cvWwaPWjNgAviwemobcRfjUx9Qk=
 		</data>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -26,7 +26,7 @@
 		</data>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		EQWPt4XSgGX07hBGNX7v47SZtXs=
+		T1g3vvZmenGHsZeAx/LEpAty5GU=
 		</data>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/i386-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -38,7 +38,7 @@
 		</data>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/i386-apple-ios-simulator.swiftmodule</key>
 		<data>
-		KOM5VNpObZQrJw9wUO4e6BCgZbs=
+		7HfZXZAGxGTKM1O/EV43pd6H9Rk=
 		</data>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -50,7 +50,7 @@
 		</data>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		MbaO6FriK/oWCf+WEjQI1HqlNmo=
+		nXyVps7UrVWSJbeKMMbtsNERi18=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -111,11 +111,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			EQWPt4XSgGX07hBGNX7v47SZtXs=
+			T1g3vvZmenGHsZeAx/LEpAty5GU=
 			</data>
 			<key>hash2</key>
 			<data>
-			y0cbMxNimFDVGKZNlLZL/w0vfZEAdCEvd5NSjvQ37hM=
+			taeOGu8sCMVGvzpB2dmZrjMIJRrJWIhFgRyd13L5z0c=
 			</data>
 		</dict>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/i386-apple-ios-simulator.swiftdoc</key>
@@ -144,11 +144,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			KOM5VNpObZQrJw9wUO4e6BCgZbs=
+			7HfZXZAGxGTKM1O/EV43pd6H9Rk=
 			</data>
 			<key>hash2</key>
 			<data>
-			cKciHY/JD4Ht+dJvIaioZPPxmo1E4i0MiU3tUw/aSc4=
+			7+BVruV/HhT1gGO1i+W9BqY4C4/TzOlVxWu/yLfZ7UU=
 			</data>
 		</dict>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
@@ -177,11 +177,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			MbaO6FriK/oWCf+WEjQI1HqlNmo=
+			nXyVps7UrVWSJbeKMMbtsNERi18=
 			</data>
 			<key>hash2</key>
 			<data>
-			Z2iaAislgokmeY6bjZ1BNJ4tSx6xTQM9mX2SBayL7Yo=
+			/tbWsVsmmf1kokzpJ+sP9QydHF6x/3nia16pZvU7CsA=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
