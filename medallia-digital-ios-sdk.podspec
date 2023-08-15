@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
 
   s.homepage         = 'https://github.com/medallia/digital-ios-sdk'
   s.license          = { :type => "Commercial", :text => "Copyright © 2023 Medallia. Use subject to licensing terms." }
-  s.author           = { 'MedalliaDigital' => 'DigitalMobileSupport@medallia.com' }
+  s.author           = { 'Medallia' => 'cocoapods-digital@medallia.com' }
   s.source           = { :git => 'https://github.com/medallia/digital-ios-sdk.git', :tag => s.version }
 
   s.ios.deployment_target = '10.0'
