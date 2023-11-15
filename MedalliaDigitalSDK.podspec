@@ -3,7 +3,7 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = 'MedalliaDigitalSDK'
+  s.name             = 'medallia-digital-ios-sdk'
   s.version          = '4.3.0'
   s.summary          = 'Medallia Digital SDK'
  
@@ -14,8 +14,8 @@ Pod::Spec.new do |s|
   s.homepage         = 'https://github.com/medallia/digital-ios-sdk'
   s.license          = { :type => "Commercial", :text => "Copyright © 2023 Medallia. Use subject to licensing terms." }
   s.authors          = { 'Medallia' => 'cocoapods-digital@medallia.com' }
-  s.source           = { :path => './MedalliaDigital.xcframework' }
+  s.source           = { :git => 'https://github.com/medallia/digital-ios-sdk.git', :tag => s.version }
 
   s.ios.deployment_target = '10.0'
-  s.ios.vendored_frameworks = 'MedalliaDigitalSDK.xcframework'
+  s.ios.vendored_frameworks = 'artifacts/MedalliaDigitalSDK.xcframework'
 end
