@@ -1,6 +1,6 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)
-// swift-module-flags: -target x86_64-apple-ios10.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name MedalliaDigitalSDK
+// swift-compiler-version: Apple Swift version 5.9.2 (swiftlang-5.9.2.2.56 clang-1500.1.0.2.5)
+// swift-module-flags: -target x86_64-apple-ios12.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name MedalliaDigitalSDK
 // swift-module-flags-ignorable: -enable-bare-slash-regex
 import AVKit
 import AdSupport
@@ -9,6 +9,7 @@ import CoreData
 import CoreFoundation
 import CoreTelephony
 import Darwin
+import DeveloperToolsSupport
 import Dispatch
 import Foundation
 import JavaScriptCore
@@ -17,6 +18,7 @@ import Photos
 import Security
 import StoreKit
 import Swift
+import SwiftUI
 import SystemConfiguration
 import UIKit.UIApplication
 import UIKit.UIDevice
@@ -25,6 +27,7 @@ import UserNotifications
 import WebKit
 import _Concurrency
 import _StringProcessing
+import _SwiftConcurrencyShims
 import zlib
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class MedalliaDigital : ObjectiveC.NSObject {
   @objc public static func sdkInit(token: Swift.String, success: @escaping () -> Swift.Void, failure: @escaping (_ error: MedalliaDigitalSDK.MDExternalError) -> Swift.Void)
@@ -32,10 +35,10 @@ import zlib
   @objc public static func setCustomParameters(_ parameters: [Swift.String : Any])
   @objc public static func showForm(_ formId: Swift.String, success: @escaping () -> Swift.Void, failure: @escaping (_ error: MedalliaDigitalSDK.MDExternalError) -> Swift.Void)
   @objc public static func handleNotification(_ formId: Swift.String, success: @escaping () -> Swift.Void, failure: @escaping (_ error: MedalliaDigitalSDK.MDExternalError) -> Swift.Void)
-  @objc public static func setFormDelegate(_ formDelegate: MedalliaDigitalSDK.MDFormDelegate?)
-  @objc public static func setInterceptDelegate(_ interceptDelegate: MedalliaDigitalSDK.MDInterceptDelegate?)
-  @objc public static func setFeedbackDelegate(_ feedbackDelegate: MedalliaDigitalSDK.MDFeedbackDelegate?)
-  @objc public static func setCustomInterceptDelegate(_ customInterceptDelegate: MedalliaDigitalSDK.MDCustomInterceptDelegate)
+  @objc public static func setFormDelegate(_ formDelegate: (any MedalliaDigitalSDK.MDFormDelegate)?)
+  @objc public static func setInterceptDelegate(_ interceptDelegate: (any MedalliaDigitalSDK.MDInterceptDelegate)?)
+  @objc public static func setFeedbackDelegate(_ feedbackDelegate: (any MedalliaDigitalSDK.MDFeedbackDelegate)?)
+  @objc public static func setCustomInterceptDelegate(_ customInterceptDelegate: any MedalliaDigitalSDK.MDCustomInterceptDelegate)
   @objc public static func enableIntercept()
   @objc public static func disableIntercept()
   @objc public static func setLogLevel(_ logLevel: MedalliaDigitalSDK.MDLogLevel)
