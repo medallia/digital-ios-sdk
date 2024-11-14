@@ -97,6 +97,7 @@ extension Foundation.Data {
   @objc optional func formDidBlockExternalUrl(formDelegateData: MedalliaDigitalSDK.MDFormDelegateData)
   @objc optional func formDidLinkSelect(formDelegateData: MedalliaDigitalSDK.MDFormDelegateData)
   @objc optional func formDidThankYouPrompt(formDelegateData: MedalliaDigitalSDK.MDFormDelegateData)
+  @objc optional func codeFormDidReady(formDelegateData: MedalliaDigitalSDK.MDFormDelegateData)
 }
 @objc public enum MDInterceptActionType : Swift.Int {
   case accepted = 0
@@ -112,33 +113,6 @@ extension Foundation.Data {
 public protocol PreviewAppBridgeDelegate : AnyObject {
   func formDidClose()
   func formDidSubmit()
-}
-@_hasMissingDesignatedInitializers public class PreviewAppBridge : MedalliaDigitalSDK.MDFormDelegate {
-  public static let shared: MedalliaDigitalSDK.PreviewAppBridge
-  weak public var delegate: (any MedalliaDigitalSDK.PreviewAppBridgeDelegate)?
-  public var sdkVersion: Swift.String? {
-    get
-  }
-  public func decodedPayload(_ token: Swift.String) -> [Swift.String : Any]?
-  public func setAccessToken(_ token: Swift.String?)
-  public func setMediaCaptureConfigurationContract(channelId: Swift.String?, domain: Swift.String?, apiKey: Swift.String?, channelUrlsPrefix: Swift.String?, uploadUrlSuffix: Swift.String?, presignedUrlSuffix: Swift.String?, mediaCaptureFilters: [Swift.String]?)
-  public func setSubmitFeedbackURL(prefix: Swift.String?, suffix: Swift.String?)
-  public func setFormJsonFileLocalUrl(_ formJsonFileLocalUrl: Swift.String?)
-  public func setProvisions(_ provisions: [Swift.String : Any?]?)
-  public func setCustomParameters(_ customParameters: [Swift.String : Any]?)
-  public func setFeatures(_ features: [Swift.String : Any?]?)
-  public func setBlockNetworkInForm(_ blockNetworkInForm: Swift.Bool?)
-  public func setRedirectLinks(_ redirectLinks: [Swift.String]?)
-  public func setTextAreaLimit(_ textAreaLimit: Swift.Int?)
-  public func showBanner(invitationBody: Swift.String, invitationTitle: Swift.String, textColor: Swift.String = "#ffffff", handleTextColor: Swift.String? = "#cccccc", font: Swift.String = "System", position: Swift.String = "TOP", backgroundColor: Swift.String = "#ffffff", invitationTimeout: Swift.Double = 5000, buttonsDisplay: Swift.Bool?, acceptButtonText: Swift.String?, acceptButtonTextColor: Swift.String?, acceptButtonBackgroundColor: Swift.String?, closeButtonColor: Swift.String?, isSticky: Swift.Bool?, isPartial: Swift.Bool?, onAccepted: @escaping () -> (), onDecline: @escaping () -> (), onDeferred: @escaping () -> ())
-  public func hidePreviousBanner()
-  public func showAlert(id: Swift.String, title: Swift.String?, message: Swift.String?, positiveButtonText: Swift.String?, maybeButtonText: Swift.String?, negativeButtonText: Swift.String?, visibleViewController: UIKit.UIViewController, setDeclineAlertButtonStyleToNormal: Swift.Bool, formLanguage: Swift.String?, isDarkModeSupported: Swift.Bool, isDarkMode: Swift.Bool, positiveTapped: @escaping () -> (), maybeTapped: @escaping () -> (), negativeTapped: @escaping () -> ())
-  public func showForm(_ id: Swift.String, formName: Swift.String, formJson: Swift.String?, templatePath: Swift.String, templateId: Swift.String, resources: [Swift.String : (remoteUrl: Swift.String, localUrl: Swift.String, checksum: Swift.String)], title: Swift.String, titleTextColor: Swift.String, titleBackgroundColor: Swift.String, formViewType: Swift.String, formTriggerType: Swift.String, formLanguage: Swift.String?, isPoweredByVisible: Swift.Bool, headerThemeName: Swift.String?, isDarkModeEnabled: Swift.Bool, invitationType: Swift.String?)
-  public func showThankYou(_ id: Swift.String, title: Swift.String, formJson: Swift.String?, formLanguage: Swift.String?, titleTextColor: Swift.String, titleBackgroundColor: Swift.String, isPoweredByVisible: Swift.Bool, headerThemeName: Swift.String?, backgroundColor: Swift.String?, contentTextColor: Swift.String?, buttonBackgroundColor: Swift.String?, buttonTextColor: Swift.String?, isDarkModeEnabled: Swift.Bool)
-  @objc public func formDidClose(formDelegateData: MedalliaDigitalSDK.MDFormDelegateData)
-  @objc public func formDidSubmit(formDelegateData: MedalliaDigitalSDK.MDFormDelegateData)
-  public func appearanceMode() -> MedalliaDigitalSDK.MDAppearanceMode
-  @objc deinit
 }
 @objc public protocol MDInterceptDelegate {
   @objc optional func interceptDidDisplay(interceptDelegateData: MedalliaDigitalSDK.MDInterceptDelegateData)

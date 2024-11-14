@@ -4,7 +4,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'medallia-digital-ios-sdk'
-  s.version          = '4.5.1'
+  s.version          = '4.6.0'
   s.summary          = 'Medallia Digital SDK'
  
   s.description      = <<-DESC

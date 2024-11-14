@@ -10,51 +10,51 @@
 		</data>
 		<key>Headers/MedalliaDigitalSDK-Swift.h</key>
 		<data>
-		V4/QUD9Upl+2OnmeQdvKTtPHu5o=
+		PTHKE/YtK8ZiAWqaZq5Bom3skP0=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		+883FiKF5qfR4fDTtD1D1xP2vtU=
+		hylH6XAEnE+O7FmR8/quZmNl2fo=
 		</data>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		rFwrcRrIlZnvfrKai6ZmcWIiSw8=
+		OA8PwQ1NEk4RFqUg6r1JO/CpQcc=
 		</data>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		Uvh5gBNY9YP+UKBRh4oJuBiCJlM=
+		GWsDnBFYi32nvvr9iess2Sr+tes=
 		</data>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		2s7e4WidgSfEyDe9uQwUqCZ61gA=
+		uQojKxVe6cSPvlynPep7pm798cU=
 		</data>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		Uvh5gBNY9YP+UKBRh4oJuBiCJlM=
+		GWsDnBFYi32nvvr9iess2Sr+tes=
 		</data>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		lWMcdT3kbjNFdBv4KGjLF1Tnv20=
+		04VFwxAmbEstBOjq1/EpR6eik1g=
 		</data>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		rFwrcRrIlZnvfrKai6ZmcWIiSw8=
+		OA8PwQ1NEk4RFqUg6r1JO/CpQcc=
 		</data>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		9bpcgmnNTf+gHZymGKUjhN6kYsE=
+		EEurmRvLeW+dcnojaGK3dngcwBc=
 		</data>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		jEGqQvyuMDcq8h6iaNFM+idbFMs=
+		fNDgXmhWS8JZ4A3lMgVL23SGRlQ=
 		</data>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		9bpcgmnNTf+gHZymGKUjhN6kYsE=
+		EEurmRvLeW+dcnojaGK3dngcwBc=
 		</data>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		7V4m+RH7XMJRQMg8AToPAZpUJvc=
+		jHYngrXUiCMjHU7VTBSn7+DcNPI=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -82,77 +82,77 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			7WsdIeKxZAvl5Ok8zpOjjD42FaPAIRAFIckiXAkytjo=
+			kFzTZAZOf9Ja8+Lh4UNH+pTU/nLerpaP8TTiV9SK2Ug=
 			</data>
 		</dict>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			y62IOYG3qwtHlq6c8+60CD5s684OauYyz/E/h67ZNPI=
+			+BKwWnuJOhQma/gt3P9IZb5tGuSDKPtGAo8Nu5reVOc=
 			</data>
 		</dict>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			eSPgjDrF1HhbFk3l5jnRKtyxHX6uLiy2srUr/3fDnHc=
+			dNkc25blyZ708xS7aYre9dSsL59oSBGxJ6FycWB9VPc=
 			</data>
 		</dict>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			FL3VRlf5vPdhEU5Hr60TkUrWbjRf5WeVq7xDt6GHwY4=
+			e1OZc1kSWcUImC9zpmW6cqfjDb/w9GRFDoE07mv4k3Y=
 			</data>
 		</dict>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			eSPgjDrF1HhbFk3l5jnRKtyxHX6uLiy2srUr/3fDnHc=
+			dNkc25blyZ708xS7aYre9dSsL59oSBGxJ6FycWB9VPc=
 			</data>
 		</dict>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			umwwdaL2bM1ReCdvZsaxr62EVm/cgeDhN/3aqY3w48Y=
+			Dc0qLntqYFYuXD+nVC51mqwSzW7TtqWVC084OpDw2AY=
 			</data>
 		</dict>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			y62IOYG3qwtHlq6c8+60CD5s684OauYyz/E/h67ZNPI=
+			+BKwWnuJOhQma/gt3P9IZb5tGuSDKPtGAo8Nu5reVOc=
 			</data>
 		</dict>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			OOZ9/8LJPOTsH7PpnO4MT16FAHMrk4dSZ0qfiSjHvHQ=
+			xHjYQiY+tz1XdbDNjpiyb7UBVC44DmXkZE+OFv+S+94=
 			</data>
 		</dict>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			H2tzeNQ9ig+K172Jc5pPrTPqOfjDAR4O9/jEh45xy3s=
+			tdXzD1fRMDErg/bMqvu2hUrJ8rPEhgBCDR7Jc1zqYhA=
 			</data>
 		</dict>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			OOZ9/8LJPOTsH7PpnO4MT16FAHMrk4dSZ0qfiSjHvHQ=
+			xHjYQiY+tz1XdbDNjpiyb7UBVC44DmXkZE+OFv+S+94=
 			</data>
 		</dict>
 		<key>Modules/MedalliaDigitalSDK.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			VHJvDhBWNXNwMQQIDTawWczDdnzAvThoiPTuLR6JMhg=
+			PxeaS77bKLWf2UYjleEpad8XvN+skvM1CC616F2UsXA=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

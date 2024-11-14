@@ -557,6 +557,21 @@ SWIFT_PROTOCOL("_TtP18MedalliaDigitalSDK14MDFormDelegate_")
 /// </ul>
 ///
 - (void)formDidThankYouPromptWithFormDelegateData:(MDFormDelegateData * _Nonnull)formDelegateData;
+/// This event is triggered when code form is ready to be  displayed
+/// \param formDelegateData MDFormDelegateData object that contains:
+/// <ul>
+///   <li>
+///     timestamp: represents the epoch time in milliseconds when the specific event has happened.
+///   </li>
+///   <li>
+///     formId: represents the form id as it appears in the digital command center under forms section.
+///   </li>
+///   <li>
+///     formTriggerType: MDFormTriggerType (in this case it’ll always be code type)
+///   </li>
+/// </ul>
+///
+- (void)codeFormDidReadyWithFormDelegateData:(MDFormDelegateData * _Nonnull)formDelegateData;
 @end
 
 enum MDFormTriggerType : NSInteger;
@@ -1450,6 +1465,21 @@ SWIFT_PROTOCOL("_TtP18MedalliaDigitalSDK14MDFormDelegate_")
 /// </ul>
 ///
 - (void)formDidThankYouPromptWithFormDelegateData:(MDFormDelegateData * _Nonnull)formDelegateData;
+/// This event is triggered when code form is ready to be  displayed
+/// \param formDelegateData MDFormDelegateData object that contains:
+/// <ul>
+///   <li>
+///     timestamp: represents the epoch time in milliseconds when the specific event has happened.
+///   </li>
+///   <li>
+///     formId: represents the form id as it appears in the digital command center under forms section.
+///   </li>
+///   <li>
+///     formTriggerType: MDFormTriggerType (in this case it’ll always be code type)
+///   </li>
+/// </ul>
+///
+- (void)codeFormDidReadyWithFormDelegateData:(MDFormDelegateData * _Nonnull)formDelegateData;
 @end
 
 enum MDFormTriggerType : NSInteger;
