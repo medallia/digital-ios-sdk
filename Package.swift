@@ -5,6 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "MedalliaDigitalSDK",
+    platforms: [
+        .iOS(.v13)
+    ],
     products: [
         .library(
             name: "MedalliaDigitalSDK",
