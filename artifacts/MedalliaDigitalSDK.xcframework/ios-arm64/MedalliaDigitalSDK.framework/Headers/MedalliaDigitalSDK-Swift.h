@@ -306,11 +306,102 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if defined(__OBJC__)
 
 
+
 typedef SWIFT_ENUM(NSInteger, MDAppearanceMode, open) {
   MDAppearanceModeLight = 0,
   MDAppearanceModeDark = 1,
   MDAppearanceModeUnknown = 2,
 };
+
+@class NSString;
+@class UIColor;
+@protocol MDFormComponent;
+@class MDFormSubmissionResult;
+
+/// Represents the complete configuration for a custom form.
+/// An instance of this class holds all the components (<code>MDAnyFormComponent</code>) that make up the form,
+/// as well as properties for customizing its appearance (e.g., button colors, titles).
+/// You use this object to render the form, handle user input, and process submissions.
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK16MDCustomFormData")
+@interface MDCustomFormData : NSObject
+/// The unique identifier for the form.
+@property (nonatomic, readonly, copy) NSString * _Nonnull formId;
+/// The color of the text on the submit button.
+@property (nonatomic, readonly, strong) UIColor * _Nullable submitButtonTextColor;
+/// The background color of the submit button.
+@property (nonatomic, readonly, strong) UIColor * _Nullable submitButtonBackgroundColor;
+/// The text displayed on the submit button.
+@property (nonatomic, readonly, copy) NSString * _Nullable submitButtonText;
+/// The color of the form’s title text.
+@property (nonatomic, readonly, strong) UIColor * _Nullable titleTextColor;
+/// The background color of the form’s title area.
+@property (nonatomic, readonly, strong) UIColor * _Nullable titleBackgroundColor;
+/// The main title text of the form.
+@property (nonatomic, readonly, copy) NSString * _Nullable titleText;
+/// The color of the title text in dark mode.
+@property (nonatomic, readonly, strong) UIColor * _Nullable darkModeTitleTextColor;
+/// The background color of the title area in dark mode.
+@property (nonatomic, readonly, strong) UIColor * _Nullable darkModeTitleBackgroundColor;
+/// Registers a block to be executed whenever the form’s state changes, such as when a component’s visibility is updated.
+/// Use this method to build your initial UI and to update it in response to user input that affects conditional logic.
+/// The block will be called immediately upon registration with the initial state of the components.
+/// \param block A block that receives an array of <code>MDAnyFormComponent</code> objects. You should iterate through this array
+/// to render or update your UI, paying attention to the <code>isVisible</code> property of each component.
+///
+- (void)onRenderWithBlock:(void (^ _Nonnull)(NSArray<id <MDFormComponent>> * _Nonnull))block;
+/// Validates and submits the form data.
+/// This method first checks if all visible components have valid values. If they do, it submits the form data.
+/// If any component is invalid, the submission fails, and the method returns a result with an error message.
+///
+/// returns:
+/// An <code>MDFormSubmissionResult</code> object indicating whether the submission was successful or not.
+- (MDFormSubmissionResult * _Nonnull)submitForm SWIFT_WARN_UNUSED_RESULT;
+/// Informs the SDK that the user has dismissed or canceled the form without submitting it.
+/// You should call this method when the user navigates away from the form screen (e.g., by tapping a back button).
+- (void)declineForm;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+@class MDCustomFormDelegateData;
+
+/// A delegate for receiving a custom form displayed information. This API method allows listening to custom form related events,.
+SWIFT_PROTOCOL("_TtP18MedalliaDigitalSDK20MDCustomFormDelegate_")
+@protocol MDCustomFormDelegate
+@optional
+/// This event is triggered when user accepted the invitet to leave a feedback.
+/// \param formDelegateData MDFormDelegateData object that contains:
+/// <ul>
+///   <li>
+///     timestamp: represents the epoch time in milliseconds when the specific event has happened.
+///   </li>
+///   <li>
+///     formId: represents the form id as it appears in the digital command center under forms section.
+///   </li>
+///   <li>
+///     formTriggerType: MDFormTriggerType
+///   </li>
+/// </ul>
+///
+- (void)customFormDidTriggerWithCustomFormDelegateData:(MDCustomFormDelegateData * _Nonnull)customFormDelegateData;
+@end
+
+enum MDFormTriggerType : NSInteger;
+
+/// An object that provides data related to a custom form event, delivered via the <code>MDCustomFormDelegate</code>.
+/// When a custom form is triggered, the delegate method <code>customFormDidTrigger</code> receives an instance of this class.
+/// It contains all the necessary information to understand the context of the event and to render the form.
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK24MDCustomFormDelegateData")
+@interface MDCustomFormDelegateData : NSObject
+/// The timestamp of when the form was triggered, represented as the number of seconds since the Unix epoch.
+@property (nonatomic) double timestamp;
+/// A unique identifier for the form.
+@property (nonatomic, copy) NSString * _Nullable formId;
+/// The manner in which the form was triggered (e.g., by code, by user action).
+@property (nonatomic) enum MDFormTriggerType formTriggerType;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
 
 @class MDCustomInterceptDelegateData;
 
@@ -340,7 +431,6 @@ SWIFT_PROTOCOL("_TtP18MedalliaDigitalSDK25MDCustomInterceptDelegate_")
 - (void)targetEvaluationDidSuccessWithCustomInterceptDelegateData:(MDCustomInterceptDelegateData * _Nonnull)customInterceptDelegateData;
 @end
 
-@class NSString;
 enum MDEngagementType : NSInteger;
 @class MDCustomInterceptPayload;
 
@@ -434,6 +524,128 @@ SWIFT_CLASS("_TtC18MedalliaDigitalSDK22MDFeedbackDelegateData")
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
+
+
+/// Represents a single choice or option within a form component that offers multiple alternatives,
+/// such as a <code>SelectFormComponent</code>, <code>RadioFormComponent</code>, or <code>CheckboxFormComponent</code>.
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK17MDFormAlternative")
+@interface MDFormAlternative : NSObject
+/// The unique identifier for this alternative. This is the value that will be submitted if this option is selected.
+@property (nonatomic, copy) NSString * _Nullable id;
+/// The user-facing text that describes this alternative. This is what you should display in your UI.
+@property (nonatomic, copy) NSString * _Nullable label;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+/// Defines the display order for a component’s choices (alternatives).
+typedef SWIFT_ENUM(NSInteger, MDFormAlternativeOrder, open) {
+/// Randomizes the order of all available choices.
+  MDFormAlternativeOrderRandomAll = 0,
+/// Randomizes the order of all choices except for the last one, which remains fixed.
+  MDFormAlternativeOrderRandomExceptForLast = 1,
+/// Displays the choices in the order they were defined in the form.
+  MDFormAlternativeOrderNone = 2,
+};
+
+
+/// Represents an autocomplete attribute that can be associated with a form component.
+/// This object can be used to provide suggestions or pre-fill information in text input fields,
+/// helping to streamline the user’s data entry process.
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK27MDFormAutocompleteAttribute")
+@interface MDFormAutocompleteAttribute : NSObject
+/// The actual value to be used for autocompletion. This is the value that will be submitted.
+@property (nonatomic, copy) NSString * _Nullable value;
+/// A user-friendly label that can be displayed as a suggestion to the user.
+@property (nonatomic, copy) NSString * _Nullable label;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+@class MDFormViewFormat;
+enum MDFormComponentType : NSInteger;
+@class MDValidationResult;
+@class NSURL;
+
+/// A protocol that defines the common interface for all form components.
+/// You will interact with objects conforming to this protocol to read their state (like <code>label</code>, <code>isVisible</code>, <code>validation</code>)
+/// and to provide user input via the <code>submitUserInput(value:)</code> method.
+SWIFT_PROTOCOL("_TtP18MedalliaDigitalSDK15MDFormComponent_")
+@protocol MDFormComponent
+/// A unique identifier for the component, assigned by the system.
+@property (nonatomic, readonly) NSInteger componentId;
+/// An optional unique name for the component, which can be used for programmatic access or custom logic.
+@property (nonatomic, readonly, copy) NSString * _Nullable uniqueName;
+/// The placeholder text displayed in an input field when it is empty.
+@property (nonatomic, readonly, copy) NSString * _Nullable placeholder;
+/// A longer description or help text that provides more context for the component.
+@property (nonatomic, readonly, copy) NSString * _Nullable componentDescription;
+/// A list of selectable options for components like <code>SelectFormComponent</code>, <code>RadioFormComponent</code>, or <code>CheckboxFormComponent</code>.
+@property (nonatomic, readonly, copy) NSArray<MDFormAlternative *> * _Nullable alternatives;
+/// Autocomplete attributes for the component, if any.
+@property (nonatomic, readonly, strong) MDFormAutocompleteAttribute * _Nullable autocompleteAttribute;
+/// An object containing view-related formatting options for the component.
+@property (nonatomic, readonly, strong) MDFormViewFormat * _Nullable view;
+/// The type of the component (e.g., textInput, nps, etc.).
+@property (nonatomic, readonly) enum MDFormComponentType componentType;
+/// The primary text or question associated with the component.
+@property (nonatomic, readonly, copy) NSString * _Nullable label;
+/// Controls whether the component is currently visible in the form. This can be updated dynamically based on conditional logic.
+@property (nonatomic) BOOL isVisible;
+/// The current value of the component, which can be <code>nil</code> if not set.
+@property (nonatomic, readonly) BOOL isRequired;
+/// Indicates whether the component’s current value meets all validation criteria.
+@property (nonatomic, readonly, strong) MDValidationResult * _Nonnull validation;
+/// The current value of the component, returned as <code>Any?</code>. You may need to cast this to the expected type (e.g., <code>String</code>, <code>Int</code>, <code>[String]</code>).
+@property (nonatomic, readonly) id _Nullable submittedValue;
+/// The current text for the label component, if applicable.
+@property (nonatomic, readonly, copy) NSString * _Nullable text;
+/// The URL of an image associated with the component, if applicable.
+@property (nonatomic, readonly, copy) NSURL * _Nullable imageUrl;
+/// An alternative label for the component, which can be used for accessibility or additional context.
+@property (nonatomic, readonly, copy) NSString * _Nullable altLabel;
+/// The role of the component, which can be used for accessibility purposes.
+@property (nonatomic, readonly, copy) NSString * _Nullable role;
+/// Use this method to programmatically set the value of the component.
+/// This will trigger the component’s validation logic and update the form’s state.
+/// \param value The new value for the component. The type should match the component’s expected type.
+///
+- (void)submitUserInputWithValue:(id _Nullable)value;
+@end
+
+/// Represents the specific type of a form component.
+/// Use this enum to identify the kind of UI element to render for a given component,
+/// such as a text input field, a set of radio buttons, or a label.
+typedef SWIFT_ENUM(NSInteger, MDFormComponentType, open) {
+/// A multi-line text input field.
+  MDFormComponentTypeTextArea = 0,
+/// A single-line text input field.
+  MDFormComponentTypeTextInput = 1,
+/// A group of radio buttons where only one option can be selected.
+  MDFormComponentTypeRadioButtons = 2,
+/// A group of checkboxes where multiple options can be selected.
+  MDFormComponentTypeCheckboxes = 3,
+/// A rating component with a scale from 1 to 7.
+  MDFormComponentTypeRating1to7 = 4,
+/// A rating component with a scale from 1 to 10.
+  MDFormComponentTypeRating1to10 = 5,
+/// A rating component with a scale from 0 to 10.
+  MDFormComponentTypeRating0to10 = 6,
+/// A generic rating component.
+  MDFormComponentTypeRating = 7,
+/// A Net Promoter Score (NPS) component, typically a 0-10 scale.
+  MDFormComponentTypeNps = 8,
+/// A dropdown or picker for selecting one option from a list.
+  MDFormComponentTypeDropdown = 9,
+/// A component for capturing media like photos or videos.
+  MDFormComponentTypeMediaCapture = 10,
+/// A component for displaying a static image.
+  MDFormComponentTypeImage = 11,
+/// A text input field specifically for email addresses, with appropriate validation.
+  MDFormComponentTypeEmail = 12,
+/// A non-interactive text label used for displaying information.
+  MDFormComponentTypeText = 13,
+};
 
 @class MDFormDelegateData;
 
@@ -578,7 +790,6 @@ SWIFT_PROTOCOL("_TtP18MedalliaDigitalSDK14MDFormDelegate_")
 - (void)codeFormDidReadyWithFormDelegateData:(MDFormDelegateData * _Nonnull)formDelegateData;
 @end
 
-enum MDFormTriggerType : NSInteger;
 
 SWIFT_CLASS("_TtC18MedalliaDigitalSDK18MDFormDelegateData")
 @interface MDFormDelegateData : NSObject
@@ -591,6 +802,48 @@ SWIFT_CLASS("_TtC18MedalliaDigitalSDK18MDFormDelegateData")
 @property (nonatomic, copy) NSString * _Nullable formLocaleDisplay;
 @property (nonatomic) enum MDAppearanceMode formHeaderAppearanceSet;
 @property (nonatomic) enum MDAppearanceMode formHeaderAppearanceDisplay;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+/// Specifies the visual rendering style for a form component.
+/// This is often used for grading or rating components.
+typedef SWIFT_ENUM(NSInteger, MDFormFormatType, open) {
+/// Renders the component as a series of selectable stars.
+  MDFormFormatTypeStars = 0,
+/// Renders the component as a series of selectable emoticons.
+  MDFormFormatTypeEmoticons = 1,
+/// Renders the component as a continuous slider.
+  MDFormFormatTypeGradingSlider = 2,
+/// Renders the component as a grid of numbered squares.
+  MDFormFormatTypeNumbersSquare = 3,
+/// Renders the component as a dropdown menu.
+  MDFormFormatTypeGradingDropdown = 4,
+/// Renders the component as a numbers
+  MDFormFormatTypeNumbers = 5,
+/// An unknown or unsupported format type.
+  MDFormFormatTypeUnknown = 6,
+};
+
+/// Defines the selection behavior for components that offer multiple choices,
+/// such as radio buttons or checkboxes.
+typedef SWIFT_ENUM(NSInteger, MDFormSelectionStyle, open) {
+/// Allows the user to select multiple options. Corresponds to a checkbox group.
+  MDFormSelectionStyleAccumulate = 0,
+/// Restricts the user to selecting only a single option. Corresponds to a radio button group or a dropdown.
+  MDFormSelectionStyleSingle = 1,
+/// An unknown or unsupported selection style.
+  MDFormSelectionStyleUnknown = 2,
+};
+
+
+/// An object that represents the result of a form submission.
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK22MDFormSubmissionResult")
+@interface MDFormSubmissionResult : NSObject
+/// Returns <code>true</code> if the form was submitted successfully.
+@property (nonatomic, readonly) BOOL isSuccess;
+/// If the submission failed, this property contains a message describing the reason for the failure.
+@property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -609,6 +862,27 @@ typedef SWIFT_ENUM(NSInteger, MDFormTriggerType, open) {
   MDFormTriggerTypeCode = 0,
 /// Invitation trigger type
   MDFormTriggerTypeInvite = 1,
+};
+
+
+/// Encapsulates all visual formatting and behavioral options for a form component.
+/// Use the properties of this class to customize the appearance and interaction of a component.
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK16MDFormViewFormat")
+@interface MDFormViewFormat : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+/// Specifies the horizontal alignment for an image component.
+typedef SWIFT_ENUM(NSInteger, MDImageAlignment, open) {
+/// Aligns the image to the center.
+  MDImageAlignmentCenter = 0,
+/// Aligns the image to the left.
+  MDImageAlignmentLeft = 1,
+/// Aligns the image to the right.
+  MDImageAlignmentRight = 2,
+/// An unknown or unsupported alignment type.
+  MDImageAlignmentUnknown = 3,
 };
 
 typedef SWIFT_ENUM(NSInteger, MDInterceptActionType, open) {
@@ -750,6 +1024,18 @@ typedef SWIFT_ENUM(NSInteger, MDSDKFrameworkType, open) {
 };
 
 
+/// An object that represents the result of a validation check on a form component.
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK18MDValidationResult")
+@interface MDValidationResult : NSObject
+/// Indicates whether the component’s current value is valid according to its validation rules.
+@property (nonatomic, readonly) BOOL isValid;
+/// If <code>isValid</code> is <code>false</code>, this property contains a user-friendly message explaining the validation error.
+@property (nonatomic, readonly, copy) NSString * _Nullable validationErrorMessage;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
 /// MedalliaDigital is the main component for the Medallia sdk.
 /// It includes the complete set of tools required in order to work with Medallia sdk.
 /// Calling sdkInit() method is mandatory before accessing any other method in this API.
@@ -802,6 +1088,10 @@ SWIFT_CLASS("_TtC18MedalliaDigitalSDK15MedalliaDigital")
 /// \param formDelegate MDFormDelegate
 ///
 + (void)setFormDelegate:(id <MDFormDelegate> _Nullable)formDelegate;
+/// Setting a delegate in order to receive custom form information. This API method allows listening to custom form related events,
+/// \param customFormDelegate MDCustomFormDelegate
+///
++ (void)setCustomFormDelegate:(id <MDCustomFormDelegate> _Nullable)customFormDelegate;
 /// Setting a delegate in order to receive intercept information (Alert or Banner displayed asking the user whether he/she wants to open form/app rating/ any other engagement type object)
 /// \param interceptDelegate MDInterceptDelegate
 ///
@@ -885,7 +1175,15 @@ SWIFT_CLASS("_TtC18MedalliaDigitalSDK15MedalliaDigital")
 /// \param userId String
 ///
 + (void)setUserId:(NSString * _Nullable)userId;
+/// Get Custom Form Data
+/// \param formId String
+///
+///
+/// returns:
+/// MDCustomFormData
++ (MDCustomFormData * _Nullable)getCustomFormData:(NSString * _Nonnull)formId SWIFT_WARN_UNUSED_RESULT;
 @end
+
 
 
 

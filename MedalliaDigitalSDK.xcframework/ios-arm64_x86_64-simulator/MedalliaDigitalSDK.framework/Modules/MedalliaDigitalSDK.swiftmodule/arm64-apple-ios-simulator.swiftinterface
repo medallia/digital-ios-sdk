@@ -36,6 +36,7 @@ import zlib
   @objc public static func showForm(_ formId: Swift.String, success: @escaping () -> Swift.Void, failure: @escaping (_ error: MedalliaDigitalSDK.MDExternalError) -> Swift.Void)
   @objc public static func handleNotification(_ formId: Swift.String, success: @escaping () -> Swift.Void, failure: @escaping (_ error: MedalliaDigitalSDK.MDExternalError) -> Swift.Void)
   @objc public static func setFormDelegate(_ formDelegate: (any MedalliaDigitalSDK.MDFormDelegate)?)
+  @objc public static func setCustomFormDelegate(_ customFormDelegate: (any MedalliaDigitalSDK.MDCustomFormDelegate)?)
   @objc public static func setInterceptDelegate(_ interceptDelegate: (any MedalliaDigitalSDK.MDInterceptDelegate)?)
   @objc public static func setFeedbackDelegate(_ feedbackDelegate: (any MedalliaDigitalSDK.MDFeedbackDelegate)?)
   @objc public static func setCustomInterceptDelegate(_ customInterceptDelegate: any MedalliaDigitalSDK.MDCustomInterceptDelegate)
@@ -51,6 +52,7 @@ import zlib
   @objc public static func setDebugForm(_ debug: Swift.Bool)
   @objc public static func closeEngagement(success: @escaping () -> Swift.Void, failure: @escaping (_ error: MedalliaDigitalSDK.MDExternalError) -> Swift.Void)
   @objc public static func setUserId(_ userId: Swift.String?)
+  @objc public static func getCustomFormData(_ formId: Swift.String) -> MedalliaDigitalSDK.MDCustomFormData?
   @objc deinit
 }
 @objc public protocol MDFeedbackDelegate {
@@ -72,6 +74,12 @@ extension UIKit.UIImage {
 extension Foundation.Data {
   public func gunzipped() -> Foundation.Data?
 }
+@objc @_hasMissingDesignatedInitializers @objcMembers public class MDCustomFormDelegateData : ObjectiveC.NSObject {
+  @objc public var timestamp: Swift.Double
+  @objc public var formId: Swift.String?
+  @objc public var formTriggerType: MedalliaDigitalSDK.MDFormTriggerType
+  @objc deinit
+}
 @objc @_hasMissingDesignatedInitializers @objcMembers public class MDFormDelegateData : ObjectiveC.NSObject {
   @objc public var timestamp: Swift.Double
   @objc public var engagementId: Swift.String
@@ -87,6 +95,11 @@ extension Foundation.Data {
 @_hasMissingDesignatedInitializers @objc public class MDExternalError : ObjectiveC.NSObject, Swift.Error {
   @objc public var statusCode: Swift.Int
   @objc public var message: Swift.String
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class MDFormAlternative : ObjectiveC.NSObject {
+  @objc public var id: Swift.String?
+  @objc public var label: Swift.String?
   @objc deinit
 }
 @objc public protocol MDFormDelegate {
@@ -114,6 +127,27 @@ public protocol PreviewAppBridgeDelegate : AnyObject {
   func formDidClose()
   func formDidSubmit()
 }
+@objc public enum MDFormComponentType : Swift.Int {
+  case textArea = 0
+  case textInput
+  case radioButtons
+  case checkboxes
+  case rating1to7
+  case rating1to10
+  case rating0to10
+  case rating
+  case nps
+  case dropdown
+  case mediaCapture
+  case image
+  case email
+  case text
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
 @objc public protocol MDInterceptDelegate {
   @objc optional func interceptDidDisplay(interceptDelegateData: MedalliaDigitalSDK.MDInterceptDelegateData)
   @objc optional func interceptDidAccept(interceptDelegateData: MedalliaDigitalSDK.MDInterceptDelegateData)
@@ -122,8 +156,71 @@ public protocol PreviewAppBridgeDelegate : AnyObject {
   @objc optional func interceptDidClose(interceptDelegateData: MedalliaDigitalSDK.MDInterceptDelegateData)
   @objc optional func interceptDidTriggerSKStoreReviewController(interceptDelegateData: MedalliaDigitalSDK.MDInterceptDelegateData)
 }
+@objc @_hasMissingDesignatedInitializers @objcMembers public class MDFormAutocompleteAttribute : ObjectiveC.NSObject {
+  @objc public var value: Swift.String?
+  @objc public var label: Swift.String?
+  @objc deinit
+}
+@objc public enum MDFormSelectionStyle : Swift.Int {
+  case accumulate = 0
+  case single
+  case unknown
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum MDFormFormatType : Swift.Int {
+  case stars = 0
+  case emoticons
+  case gradingSlider
+  case numbersSquare
+  case gradingDropdown
+  case numbers
+  case unknown
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum MDFormAlternativeOrder : Swift.Int {
+  case randomAll = 0
+  case randomExceptForLast
+  case none
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum MDImageAlignment : Swift.Int {
+  case center = 0
+  case left
+  case right
+  case unknown
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class MDFormViewFormat : ObjectiveC.NSObject {
+  public var selectionStyle: MedalliaDigitalSDK.MDFormSelectionStyle?
+  public var format: MedalliaDigitalSDK.MDFormFormatType?
+  public var showLabels: Swift.Bool?
+  public var numberOfLines: Swift.Int?
+  public var alternativesOrder: MedalliaDigitalSDK.MDFormAlternativeOrder?
+  public var maxLength: Swift.Int?
+  public var imageAlignment: MedalliaDigitalSDK.MDImageAlignment?
+  @objc deinit
+}
 @objc public protocol MDCustomInterceptDelegate {
   @objc optional func targetEvaluationDidSuccess(customInterceptDelegateData: MedalliaDigitalSDK.MDCustomInterceptDelegateData)
+}
+@objc public protocol MDCustomFormDelegate {
+  @objc optional func customFormDidTrigger(customFormDelegateData: MedalliaDigitalSDK.MDCustomFormDelegateData)
 }
 @objc @_hasMissingDesignatedInitializers @objcMembers public class MDFeedbackDelegateData : ObjectiveC.NSObject {
   @objc public var timestamp: Swift.Double
@@ -183,6 +280,95 @@ public protocol PreviewAppBridgeDelegate : AnyObject {
   @objc public var appearanceDisplay: MedalliaDigitalSDK.MDAppearanceMode
   @objc deinit
 }
+@objc public protocol MDFormComponent {
+  @objc var componentId: Swift.Int { get }
+  @objc var uniqueName: Swift.String? { get }
+  @objc var placeholder: Swift.String? { get }
+  @objc var componentDescription: Swift.String? { get }
+  @objc var alternatives: [MedalliaDigitalSDK.MDFormAlternative]? { get }
+  @objc var autocompleteAttribute: MedalliaDigitalSDK.MDFormAutocompleteAttribute? { get }
+  @objc var view: MedalliaDigitalSDK.MDFormViewFormat? { get }
+  @objc var componentType: MedalliaDigitalSDK.MDFormComponentType { get }
+  @objc var label: Swift.String? { get }
+  @objc var isVisible: Swift.Bool { get set }
+  @objc var isRequired: Swift.Bool { get }
+  @objc var validation: MedalliaDigitalSDK.MDValidationResult { get }
+  @objc var submittedValue: Any? { get }
+  @objc var text: Swift.String? { get }
+  @objc var imageUrl: Foundation.URL? { get }
+  @objc var altLabel: Swift.String? { get }
+  @objc var role: Swift.String? { get }
+  @objc func submitUserInput(value: Any?)
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class MDValidationResult : ObjectiveC.NSObject {
+  @objc final public let isValid: Swift.Bool
+  @objc final public let validationErrorMessage: Swift.String?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @objcMembers public class MDAnyFormComponent<T> : ObjectiveC.NSObject, MedalliaDigitalSDK.MDFormComponent {
+  @objc public var validation: MedalliaDigitalSDK.MDValidationResult {
+    @objc get
+  }
+  @objc final public let componentId: Swift.Int
+  @objc final public let label: Swift.String?
+  @objc final public let isRequired: Swift.Bool
+  @objc final public let uniqueName: Swift.String?
+  @objc final public let placeholder: Swift.String?
+  @objc final public let componentDescription: Swift.String?
+  @objc final public let text: Swift.String?
+  @objc final public let imageUrl: Foundation.URL?
+  @objc final public let altLabel: Swift.String?
+  @objc final public let alternatives: [MedalliaDigitalSDK.MDFormAlternative]?
+  @objc final public let autocompleteAttribute: MedalliaDigitalSDK.MDFormAutocompleteAttribute?
+  @objc final public let view: MedalliaDigitalSDK.MDFormViewFormat?
+  @objc public var isVisible: Swift.Bool
+  @objc final public let componentType: MedalliaDigitalSDK.MDFormComponentType
+  @objc public var submittedValue: Any? {
+    @objc get
+  }
+  @objc public var role: Swift.String?
+  @objc public func submitUserInput(value: Any?)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class MDTextFormComponent : MedalliaDigitalSDK.MDAnyFormComponent<Swift.String> {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class MDImageFormComponent : MedalliaDigitalSDK.MDAnyFormComponent<Swift.String> {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class MDRatingFormComponent : MedalliaDigitalSDK.MDAnyFormComponent<Swift.Int> {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class MDRatingOneToSevenFormComponent : MedalliaDigitalSDK.MDAnyFormComponent<Swift.Int> {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class MDRatingOneToTenFormComponent : MedalliaDigitalSDK.MDAnyFormComponent<Swift.Int> {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class MDRatingZeroToTenFormComponent : MedalliaDigitalSDK.MDAnyFormComponent<Swift.Int> {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class MDTextInputFormComponent : MedalliaDigitalSDK.MDAnyFormComponent<Swift.String> {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class MDNPSFormComponent : MedalliaDigitalSDK.MDAnyFormComponent<Swift.Int> {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class MDEmailFormComponent : MedalliaDigitalSDK.MDAnyFormComponent<Swift.String> {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class MDDropdownFormComponent : MedalliaDigitalSDK.MDAnyFormComponent<Swift.String> {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class MDRadioButtonsFormComponent : MedalliaDigitalSDK.MDAnyFormComponent<Swift.String> {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class MDCheckboxesFormComponent : MedalliaDigitalSDK.MDAnyFormComponent<[Swift.String]> {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class MDTextAreaFormComponent : MedalliaDigitalSDK.MDAnyFormComponent<Swift.String> {
+  @objc deinit
+}
 @objc public enum MDAppearanceMode : Swift.Int {
   case light = 0
   case dark = 1
@@ -203,6 +389,26 @@ public protocol PreviewAppBridgeDelegate : AnyObject {
     get
   }
 }
+@objc @_hasMissingDesignatedInitializers @objcMembers public class MDCustomFormData : ObjectiveC.NSObject {
+  @objc final public let formId: Swift.String
+  @objc final public let submitButtonTextColor: UIKit.UIColor?
+  @objc final public let submitButtonBackgroundColor: UIKit.UIColor?
+  @objc final public let submitButtonText: Swift.String?
+  @objc final public let titleTextColor: UIKit.UIColor?
+  @objc final public let titleBackgroundColor: UIKit.UIColor?
+  @objc final public let titleText: Swift.String?
+  @objc final public let darkModeTitleTextColor: UIKit.UIColor?
+  @objc final public let darkModeTitleBackgroundColor: UIKit.UIColor?
+  @objc public func onRender(block: @escaping ([any MedalliaDigitalSDK.MDFormComponent]) -> Swift.Void)
+  @objc public func submitForm() -> MedalliaDigitalSDK.MDFormSubmissionResult
+  @objc public func declineForm()
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class MDFormSubmissionResult : ObjectiveC.NSObject {
+  @objc final public let isSuccess: Swift.Bool
+  @objc final public let errorMessage: Swift.String?
+  @objc deinit
+}
 @objc public enum MDSDKFrameworkType : Swift.Int {
   case native = 0
   case reactNative = 1
@@ -217,6 +423,21 @@ public protocol PreviewAppBridgeDelegate : AnyObject {
 extension MedalliaDigitalSDK.MDInterceptActionType : Swift.Equatable {}
 extension MedalliaDigitalSDK.MDInterceptActionType : Swift.Hashable {}
 extension MedalliaDigitalSDK.MDInterceptActionType : Swift.RawRepresentable {}
+extension MedalliaDigitalSDK.MDFormComponentType : Swift.Equatable {}
+extension MedalliaDigitalSDK.MDFormComponentType : Swift.Hashable {}
+extension MedalliaDigitalSDK.MDFormComponentType : Swift.RawRepresentable {}
+extension MedalliaDigitalSDK.MDFormSelectionStyle : Swift.Equatable {}
+extension MedalliaDigitalSDK.MDFormSelectionStyle : Swift.Hashable {}
+extension MedalliaDigitalSDK.MDFormSelectionStyle : Swift.RawRepresentable {}
+extension MedalliaDigitalSDK.MDFormFormatType : Swift.Equatable {}
+extension MedalliaDigitalSDK.MDFormFormatType : Swift.Hashable {}
+extension MedalliaDigitalSDK.MDFormFormatType : Swift.RawRepresentable {}
+extension MedalliaDigitalSDK.MDFormAlternativeOrder : Swift.Equatable {}
+extension MedalliaDigitalSDK.MDFormAlternativeOrder : Swift.Hashable {}
+extension MedalliaDigitalSDK.MDFormAlternativeOrder : Swift.RawRepresentable {}
+extension MedalliaDigitalSDK.MDImageAlignment : Swift.Equatable {}
+extension MedalliaDigitalSDK.MDImageAlignment : Swift.Hashable {}
+extension MedalliaDigitalSDK.MDImageAlignment : Swift.RawRepresentable {}
 extension MedalliaDigitalSDK.MDLogLevel : Swift.Equatable {}
 extension MedalliaDigitalSDK.MDLogLevel : Swift.Hashable {}
 extension MedalliaDigitalSDK.MDLogLevel : Swift.RawRepresentable {}
