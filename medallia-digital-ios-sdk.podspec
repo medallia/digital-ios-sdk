@@ -4,7 +4,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'medallia-digital-ios-sdk'
-  s.version          = '4.9.0'
+  s.version          = '4.10.0'
   s.summary          = 'Medallia Digital SDK'
  
   s.description      = <<-DESC
@@ -16,6 +16,8 @@ Pod::Spec.new do |s|
   s.authors          = { 'Medallia' => 'cocoapods-digital@medallia.com' }
   s.source           = { :git => 'https://github.com/medallia/digital-ios-sdk.git', :tag => s.version }
 
-  s.ios.deployment_target = '12.0'
+  s.ios.deployment_target = '13.0'
   s.ios.vendored_frameworks = 'artifacts/MedalliaDigitalSDK.xcframework'
+  
+  s.dependency 'medallia-mobile-bridge-ios-sdk', '~> 1.0'
 end

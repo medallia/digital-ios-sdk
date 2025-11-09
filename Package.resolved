@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "medallia-mobile-bridge-ios-sdk",
+        "repositoryURL": "https://github.com/medallia/mobile-ios-bridge-sdk.git",
+        "state": {
+          "branch": null,
+          "revision": "c83f9282dc226643e1059fca3a106d66ccade7d7",
+          "version": "1.0.4"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
