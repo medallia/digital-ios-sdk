@@ -1,7 +1,5 @@
 //
-//  File.swift
-//  
+// MedalliaDigitalSDK
+// Copyright © 2025 Medallia. Use subject to licensing terms.
 //
-//  Created by victor iglesias on 7/5/24.
-//
-
+// Swift Package Manager needs at least one header file.
