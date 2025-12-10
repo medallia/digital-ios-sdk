@@ -1200,6 +1200,7 @@ SWIFT_CLASS("_TtC18MedalliaDigitalSDK15MedalliaDigital")
 @property (nonatomic, readonly, copy) NSString * _Nullable medalliaDigitalSDKEngagementId;
 @end
 
+
 #endif
 #if __has_attribute(external_source_symbol)
 # pragma clang attribute pop
