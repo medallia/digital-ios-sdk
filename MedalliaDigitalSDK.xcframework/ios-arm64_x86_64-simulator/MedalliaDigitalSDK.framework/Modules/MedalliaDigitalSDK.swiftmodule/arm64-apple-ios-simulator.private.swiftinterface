@@ -1,6 +1,6 @@
 // swift-interface-format-version: 1.0
 // swift-compiler-version: Apple Swift version 6.3 effective-5.10 (swiftlang-6.3.0.123.5 clang-2100.0.123.102)
-// swift-module-flags: -target arm64-apple-ios15.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name MedalliaDigitalSDK
+// swift-module-flags: -target arm64-apple-ios17.6-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name MedalliaDigitalSDK
 // swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3
 import AVKit
 import AdSupport
@@ -13,12 +13,12 @@ import DeveloperToolsSupport
 import Dispatch
 import Foundation
 import JavaScriptCore
+import MedalliaSDK
 import MobileCoreServices
 import Photos
 import Security
 import StoreKit
 import Swift
-import SwiftUI
 import SystemConfiguration
 import UIKit.UIApplication
 import UIKit.UIDevice
@@ -30,7 +30,8 @@ import _StringProcessing
 import _SwiftConcurrencyShims
 import zlib
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class MedalliaDigital : ObjectiveC.NSObject {
-  @objc public static func sdkInit(token: Swift.String, success: @escaping () -> Swift.Void, failure: @escaping (_ error: MedalliaDigitalSDK.MDExternalError) -> Swift.Void)
+  @objc @available(*, deprecated, message: "Use the Unified API initialize configuration instead.")
+  public static func sdkInit(token: Swift.String, success: @escaping () -> Swift.Void, failure: @escaping (_ error: MedalliaDigitalSDK.MDExternalError) -> Swift.Void)
   @objc public static func setCustomParameter(name: Swift.String, value: Any)
   @objc public static func setCustomParameters(_ parameters: [Swift.String : Any])
   @objc public static func showForm(_ formId: Swift.String, success: @escaping () -> Swift.Void, failure: @escaping (_ error: MedalliaDigitalSDK.MDExternalError) -> Swift.Void)
@@ -42,7 +43,8 @@ import zlib
   @objc public static func setCustomInterceptDelegate(_ customInterceptDelegate: any MedalliaDigitalSDK.MDCustomInterceptDelegate)
   @objc public static func enableIntercept()
   @objc public static func disableIntercept()
-  @objc public static func setLogLevel(_ logLevel: MedalliaDigitalSDK.MDLogLevel)
+  @objc @available(*, deprecated, message: "Use the Unified API logging configuration instead.")
+  public static func setLogLevel(_ logLevel: MedalliaDigitalSDK.MDLogLevel)
   @objc public static func stopSDK(clearData: Swift.Bool = false)
   @objc public static func revertStopSDK()
   @objc public static func setSdkFramework(_ mdSdkFrameworkType: MedalliaDigitalSDK.MDSDKFrameworkType)
@@ -126,6 +128,33 @@ extension Foundation.Data {
 public protocol PreviewAppBridgeDelegate : AnyObject {
   func formDidClose()
   func formDidSubmit()
+}
+@_hasMissingDesignatedInitializers public class PreviewAppBridge : MedalliaDigitalSDK.MDFormDelegate {
+  public static let shared: MedalliaDigitalSDK.PreviewAppBridge
+  weak public var delegate: (any MedalliaDigitalSDK.PreviewAppBridgeDelegate)?
+  public var sdkVersion: Swift.String? {
+    get
+  }
+  public func decodedPayload(_ token: Swift.String) -> [Swift.String : Any]?
+  public func setAccessToken(_ token: Swift.String?)
+  public func setMediaCaptureConfigurationContract(channelId: Swift.String?, domain: Swift.String?, apiKey: Swift.String?, channelUrlsPrefix: Swift.String?, uploadUrlSuffix: Swift.String?, presignedUrlSuffix: Swift.String?, mediaCaptureFilters: [Swift.String]?)
+  public func setSubmitFeedbackURL(prefix: Swift.String?, suffix: Swift.String?)
+  public func setFormJsonFileLocalUrl(_ formJsonFileLocalUrl: Swift.String?)
+  public func setProvisions(_ provisions: [Swift.String : Any?]?)
+  public func setCustomParameters(_ customParameters: [Swift.String : Any]?)
+  public func setFeatures(_ features: [Swift.String : Any?]?)
+  public func setBlockNetworkInForm(_ blockNetworkInForm: Swift.Bool?)
+  public func setRedirectLinks(_ redirectLinks: [Swift.String]?)
+  public func setTextAreaLimit(_ textAreaLimit: Swift.Int?)
+  public func showBanner(invitationBody: Swift.String, invitationTitle: Swift.String, textColor: Swift.String = "#ffffff", handleTextColor: Swift.String? = "#cccccc", font: Swift.String = "System", position: Swift.String = "TOP", backgroundColor: Swift.String = "#ffffff", invitationTimeout: Swift.Double = 5000, buttonsDisplay: Swift.Bool?, acceptButtonText: Swift.String?, acceptButtonTextColor: Swift.String?, acceptButtonBackgroundColor: Swift.String?, closeButtonColor: Swift.String?, isSticky: Swift.Bool?, isPartial: Swift.Bool?, onAccepted: @escaping () -> (), onDecline: @escaping () -> (), onDeferred: @escaping () -> ())
+  public func hidePreviousBanner()
+  public func showAlert(id: Swift.String, title: Swift.String?, message: Swift.String?, positiveButtonText: Swift.String?, maybeButtonText: Swift.String?, negativeButtonText: Swift.String?, visibleViewController: UIKit.UIViewController, setDeclineAlertButtonStyleToNormal: Swift.Bool, formLanguage: Swift.String?, isDarkModeSupported: Swift.Bool, isDarkMode: Swift.Bool, positiveTapped: @escaping () -> (), maybeTapped: @escaping () -> (), negativeTapped: @escaping () -> ())
+  public func showForm(_ id: Swift.String, formName: Swift.String, formJson: Swift.String?, templatePath: Swift.String, templateId: Swift.String, resources: [Swift.String : (remoteUrl: Swift.String, localUrl: Swift.String, checksum: Swift.String)], title: Swift.String, titleTextColor: Swift.String, titleBackgroundColor: Swift.String, formViewType: Swift.String, formTriggerType: Swift.String, formLanguage: Swift.String?, isRtl: Swift.Bool?, isPoweredByVisible: Swift.Bool, headerThemeName: Swift.String?, isDarkModeEnabled: Swift.Bool, invitationType: Swift.String?, closeModalButton: Swift.String?)
+  public func showThankYou(_ id: Swift.String, title: Swift.String, formJson: Swift.String?, formLanguage: Swift.String?, isRtl: Swift.Bool?, titleTextColor: Swift.String, titleBackgroundColor: Swift.String, isPoweredByVisible: Swift.Bool, headerThemeName: Swift.String?, backgroundColor: Swift.String?, contentTextColor: Swift.String?, buttonBackgroundColor: Swift.String?, buttonTextColor: Swift.String?, isDarkModeEnabled: Swift.Bool, closeModalButton: Swift.String?)
+  @objc public func formDidClose(formDelegateData: MedalliaDigitalSDK.MDFormDelegateData)
+  @objc public func formDidSubmit(formDelegateData: MedalliaDigitalSDK.MDFormDelegateData)
+  public func appearanceMode() -> MedalliaDigitalSDK.MDAppearanceMode
+  @objc deinit
 }
 @objc public enum MDFormComponentType : Swift.Int {
   case textArea = 0
@@ -218,6 +247,217 @@ public protocol PreviewAppBridgeDelegate : AnyObject {
 }
 @objc public protocol MDCustomInterceptDelegate {
   @objc optional func targetEvaluationDidSuccess(customInterceptDelegateData: MedalliaDigitalSDK.MDCustomInterceptDelegateData)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class MedalliaDigitalFeedback : ObjectiveC.NSObject {
+  @objc(makeInitConfigBuilder) public static func initConfigBuilder() -> MedalliaDigitalSDK.MedalliaDigitalFeedbackInitConfigBuilder
+  @objc(makeLoggingConfigBuilder) public static func loggingConfigBuilder() -> MedalliaDigitalSDK.MedalliaDigitalLoggingConfigBuilder
+  @objc(makeStartConfigBuilder) public static func startConfigBuilder() -> MedalliaDigitalSDK.MedalliaDigitalFeedbackStartConfigBuilder
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class MedalliaDigitalFeedbackInitConfigBuilder : ObjectiveC.NSObject, MedalliaSDK.MedalliaBuilder {
+  @objc public var token: Swift.String?
+  @objc @discardableResult
+  public func token(_ token: Swift.String) -> MedalliaDigitalSDK.MedalliaDigitalFeedbackInitConfigBuilder
+  @objc public func build() -> any MedalliaSDK.MedalliaResult
+  @objc(buildOrThrowAndReturnError:) public func buildOrThrow() throws -> Any
+  @objc public func buildOrNull() -> Any?
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension MedalliaSDK.MedalliaFeedbackInitializationConfiguration {
+  public func build(_ configure: (MedalliaDigitalSDK.MedalliaDigitalFeedbackInitConfigBuilder) -> Swift.Void) -> any MedalliaSDK.MedalliaResult
+  public func buildOrThrow(_ configure: (MedalliaDigitalSDK.MedalliaDigitalFeedbackInitConfigBuilder) -> Swift.Void) throws -> any MedalliaSDK.MedalliaFeedbackInitializationConfiguration
+  public func buildOrNull(_ configure: (MedalliaDigitalSDK.MedalliaDigitalFeedbackInitConfigBuilder) -> Swift.Void) -> (any MedalliaSDK.MedalliaFeedbackInitializationConfiguration)?
+}
+extension MedalliaSDK.MedalliaFeedbackLoggingConfiguration {
+  public func build(_ configure: (MedalliaDigitalSDK.MedalliaDigitalLoggingConfigBuilder) -> Swift.Void) -> any MedalliaSDK.MedalliaResult
+  public func buildOrThrow(_ configure: (MedalliaDigitalSDK.MedalliaDigitalLoggingConfigBuilder) -> Swift.Void) throws -> any MedalliaSDK.MedalliaFeedbackLoggingConfiguration
+  public func buildOrNull(_ configure: (MedalliaDigitalSDK.MedalliaDigitalLoggingConfigBuilder) -> Swift.Void) -> (any MedalliaSDK.MedalliaFeedbackLoggingConfiguration)?
+}
+extension MedalliaSDK.MedalliaFeedbackStartConfiguration {
+  public func build(_ configure: (MedalliaDigitalSDK.MedalliaDigitalFeedbackStartConfigBuilder) -> Swift.Void) -> any MedalliaSDK.MedalliaResult
+  public func buildOrThrow(_ configure: (MedalliaDigitalSDK.MedalliaDigitalFeedbackStartConfigBuilder) -> Swift.Void) throws -> any MedalliaSDK.MedalliaFeedbackStartConfiguration
+  public func buildOrNull(_ configure: (MedalliaDigitalSDK.MedalliaDigitalFeedbackStartConfigBuilder) -> Swift.Void) -> (any MedalliaSDK.MedalliaFeedbackStartConfiguration)?
+  public func buildWithInit(_ configure: (MedalliaDigitalSDK.MedalliaDigitalFeedbackInitConfigBuilder) -> Swift.Void) -> any MedalliaSDK.MedalliaResult
+  public func buildWithInitOrThrow(_ configure: (MedalliaDigitalSDK.MedalliaDigitalFeedbackInitConfigBuilder) -> Swift.Void) throws -> any MedalliaSDK.MedalliaFeedbackStartConfiguration
+  public func buildWithInitOrNull(_ configure: (MedalliaDigitalSDK.MedalliaDigitalFeedbackInitConfigBuilder) -> Swift.Void) -> (any MedalliaSDK.MedalliaFeedbackStartConfiguration)?
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class MedalliaDigitalFeedbackStartConfigBuilder : ObjectiveC.NSObject, MedalliaSDK.MedalliaBuilder {
+  @objc public var token: Swift.String?
+  @objc @discardableResult
+  public func token(_ token: Swift.String) -> MedalliaDigitalSDK.MedalliaDigitalFeedbackStartConfigBuilder
+  @objc public func build() -> any MedalliaSDK.MedalliaResult
+  @objc(buildOrThrowAndReturnError:) public func buildOrThrow() throws -> Any
+  @objc public func buildOrNull() -> Any?
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers public class MedalliaDigitalStartException : MedalliaSDK.MedalliaStartException {
+  final public let errorCode: Swift.Int
+  final public let externalError: MedalliaDigitalSDK.MDExternalError?
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers final public class MedalliaDigitalStartInvalidToken : MedalliaDigitalSDK.MedalliaDigitalStartException, @unchecked Swift.Sendable {
+  @objc override final public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers final public class MedalliaDigitalStartUnsupportedDevice : MedalliaDigitalSDK.MedalliaDigitalStartException, @unchecked Swift.Sendable {
+  @objc override final public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers final public class MedalliaDigitalStartCoreDataFailed : MedalliaDigitalSDK.MedalliaDigitalStartException, @unchecked Swift.Sendable {
+  @objc override final public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers final public class MedalliaDigitalStartWrongPlatform : MedalliaDigitalSDK.MedalliaDigitalStartException, @unchecked Swift.Sendable {
+  @objc override final public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers final public class MedalliaDigitalStartAlreadyStarted : MedalliaDigitalSDK.MedalliaDigitalStartException, @unchecked Swift.Sendable {
+  @objc override final public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers final public class MedalliaDigitalStartInProgress : MedalliaDigitalSDK.MedalliaDigitalStartException, @unchecked Swift.Sendable {
+  @objc override final public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers final public class MedalliaDigitalStartSdkNotInitialized : MedalliaDigitalSDK.MedalliaDigitalStartException, @unchecked Swift.Sendable {
+  @objc override final public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers final public class MedalliaDigitalStartSdkStopped : MedalliaDigitalSDK.MedalliaDigitalStartException, @unchecked Swift.Sendable {
+  @objc override final public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers final public class MedalliaDigitalStartSdkKilled : MedalliaDigitalSDK.MedalliaDigitalStartException, @unchecked Swift.Sendable {
+  @objc override final public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers final public class MedalliaDigitalStartAuthorizationFailed : MedalliaDigitalSDK.MedalliaDigitalStartException, @unchecked Swift.Sendable {
+  @objc override final public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers final public class MedalliaDigitalStartConfigurationError : MedalliaDigitalSDK.MedalliaDigitalStartException, @unchecked Swift.Sendable {
+  @objc override final public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers final public class MedalliaDigitalStartNetworkUnavailable : MedalliaDigitalSDK.MedalliaDigitalStartException, @unchecked Swift.Sendable {
+  @objc override final public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers final public class MedalliaDigitalStartInternalError : MedalliaDigitalSDK.MedalliaDigitalStartException, @unchecked Swift.Sendable {
+  @objc override final public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers public class MedalliaDigitalConfigValidationException : MedalliaSDK.MedalliaFeedbackException {
+  public init(message: Swift.String, cause: MedalliaSDK.KotlinThrowable? = nil)
+  @objc override dynamic public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers public class MedalliaDigitalInitializationException : MedalliaSDK.MedalliaFeedbackException {
+  final public let errorCode: Swift.Int
+  final public let externalError: MedalliaDigitalSDK.MDExternalError?
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers final public class MedalliaDigitalInitInvalidToken : MedalliaDigitalSDK.MedalliaDigitalInitializationException, @unchecked Swift.Sendable {
+  @objc override final public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers final public class MedalliaDigitalInitUnsupportedDevice : MedalliaDigitalSDK.MedalliaDigitalInitializationException, @unchecked Swift.Sendable {
+  @objc override final public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers final public class MedalliaDigitalInitCoreDataFailed : MedalliaDigitalSDK.MedalliaDigitalInitializationException, @unchecked Swift.Sendable {
+  @objc override final public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers final public class MedalliaDigitalInitWrongPlatform : MedalliaDigitalSDK.MedalliaDigitalInitializationException, @unchecked Swift.Sendable {
+  @objc override final public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers final public class MedalliaDigitalInitAlreadyInitialized : MedalliaDigitalSDK.MedalliaDigitalInitializationException, @unchecked Swift.Sendable {
+  @objc override final public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers final public class MedalliaDigitalInitInProgress : MedalliaDigitalSDK.MedalliaDigitalInitializationException, @unchecked Swift.Sendable {
+  @objc override final public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers final public class MedalliaDigitalInitSdkStopped : MedalliaDigitalSDK.MedalliaDigitalInitializationException, @unchecked Swift.Sendable {
+  @objc override final public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers final public class MedalliaDigitalInitSdkKilled : MedalliaDigitalSDK.MedalliaDigitalInitializationException, @unchecked Swift.Sendable {
+  @objc override final public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers final public class MedalliaDigitalInitAuthorizationFailed : MedalliaDigitalSDK.MedalliaDigitalInitializationException, @unchecked Swift.Sendable {
+  @objc override final public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers final public class MedalliaDigitalInitConfigurationError : MedalliaDigitalSDK.MedalliaDigitalInitializationException, @unchecked Swift.Sendable {
+  @objc override final public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers final public class MedalliaDigitalInitNetworkUnavailable : MedalliaDigitalSDK.MedalliaDigitalInitializationException, @unchecked Swift.Sendable {
+  @objc override final public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers final public class MedalliaDigitalInitInternalError : MedalliaDigitalSDK.MedalliaDigitalInitializationException, @unchecked Swift.Sendable {
+  @objc override final public var recoverySuggestion: Swift.String {
+    @objc get
+  }
+  @objc deinit
 }
 @objc public protocol MDCustomFormDelegate {
   @objc optional func customFormDidTrigger(customFormDelegateData: MedalliaDigitalSDK.MDCustomFormDelegateData)
@@ -419,6 +659,22 @@ public protocol PreviewAppBridgeDelegate : AnyObject {
   public var rawValue: Swift.Int {
     get
   }
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class MedalliaDigitalLoggingConfigBuilder : ObjectiveC.NSObject, MedalliaSDK.MedalliaBuilder {
+  @objc public var level: MedalliaSDK.MedalliaLogLevel
+  @objc public var levels: Swift.Set<MedalliaSDK.MedalliaLogLevel>
+  @objc @discardableResult
+  public func level(_ level: MedalliaSDK.MedalliaLogLevel) -> MedalliaDigitalSDK.MedalliaDigitalLoggingConfigBuilder
+  @discardableResult
+  public func levels(_ levels: MedalliaSDK.MedalliaLogLevel...) -> MedalliaDigitalSDK.MedalliaDigitalLoggingConfigBuilder
+  @objc public func build() -> any MedalliaSDK.MedalliaResult
+  @objc(buildOrThrowAndReturnError:) public func buildOrThrow() throws -> Any
+  @objc public func buildOrNull() -> Any?
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension MedalliaDigitalSDK.MDLogLevel {
+  public func toMedalliaLogLevel() -> MedalliaSDK.MedalliaLogLevel
 }
 extension MedalliaDigitalSDK.MDInterceptActionType : Swift.Equatable {}
 extension MedalliaDigitalSDK.MDInterceptActionType : Swift.Hashable {}

@@ -347,6 +347,7 @@ extern "C" {
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
 @import Foundation;
+@import MedalliaSDK;
 @import ObjectiveC;
 @import UserNotifications;
 #endif
@@ -1091,13 +1092,31 @@ SWIFT_CLASS("_TtC18MedalliaDigitalSDK15MedalliaDigital")
 /// This method initializes the SDK and by doing so authenticates the app, and retrieves configuration elements from Medallia Digital.
 /// <em>This method is mandatory in order to start Medallia SDK</em>
 /// All the following vars are mandatory for init to run.
-/// \param token Medallia Digital developer token (can be found in the account section of your Medallia Digital dashboard). Note that this key is assigned per application.
+/// important:
+/// Deprecated. Use the Unified API initialize configuration instead.
+/// <h3>Swift Implementation</h3>
+/// \code
+/// let config = Medallia.feedback.initializationConfiguration.buildOrNull { builder in
+///     builder.token = "your-token-here"
+/// }
+///
+/// Medallia.initialize(config: config)
+///
+/// \endcode<h3>Objective-C Implementation</h3>
+/// \code
+/// MedalliaFeedbackInitializationConfiguration *config = [Medallia.feedback.initializationConfiguration buildOrNull:^(id<MedalliaFeedbackInitializationConfigurationBuilder> builder) {
+///     builder.token = @"your-token-here";
+/// }];
+///
+/// [Medallia initializeWithConfig:config];
+///
+/// \endcode\param token Medallia Digital developer token (can be found in the account section of your Medallia Digital dashboard). Note that this key is assigned per application.
 ///
 /// \param success Success Closure
 ///
 /// \param failure Failure Closure
 ///
-+ (void)sdkInitWithToken:(NSString * _Nonnull)token success:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(MDExternalError * _Nonnull))failure;
++ (void)sdkInitWithToken:(NSString * _Nonnull)token success:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(MDExternalError * _Nonnull))failure SWIFT_DEPRECATED_MSG("Use the Unified API initialize configuration instead.");
 /// The SDK enables the app to set custom parameters of several types. Define specific parameter to add to the submitted feedback and targeting. * If the name specified already exists, it will be overridden.
 /// The SDK supports the following types: String, Integer(or int), Long(or long), Double(or double), Float(or float), Boolean(or bool)
 /// In case the value is not one of these primitive types, custom parameter won’t be saved.
@@ -1174,9 +1193,11 @@ SWIFT_CLASS("_TtC18MedalliaDigitalSDK15MedalliaDigital")
 /// Default log level in the SDK is .off
 /// Note: if you choose log level = .off, there will be no logs at all
 /// It is highly recommended to get log level .off when App is in production/Appstore
+/// important:
+/// Deprecated. Use the Unified API logging configuration instead.
 /// \param logLevel log level to determine which logs will be printed to the console
 ///
-+ (void)setLogLevel:(enum MDLogLevel)logLevel;
++ (void)setLogLevel:(enum MDLogLevel)logLevel SWIFT_DEPRECATED_MSG("Use the Unified API logging configuration instead.");
 /// Stop SDK API will stop the SDK functionality.
 /// In case the API is been called with #clearData parameter true, personalized SDK data will be cleared.
 /// \param clearData clear data determines if the personalized data should be cleared in addition to stopping the SDK
@@ -1226,6 +1247,320 @@ SWIFT_CLASS("_TtC18MedalliaDigitalSDK15MedalliaDigital")
 /// returns:
 /// MDCustomFormData
 + (MDCustomFormData * _Nullable)getCustomFormData:(NSString * _Nonnull)formId SWIFT_WARN_UNUSED_RESULT;
+@end
+
+@class MSDKKotlinThrowable;
+/// A required configuration field was missing or invalid when building a
+/// <code>MedalliaFeedbackInitializationConfiguration</code>.
+/// Returned inside <code>MedalliaResult.failure</code> from builder methods when
+/// validation fails before initialization is attempted.
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK40MedalliaDigitalConfigValidationException")
+@interface MedalliaDigitalConfigValidationException : MedalliaFeedbackException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+- (nonnull instancetype)initWithMessage:(NSString * _Nullable)message cause:(MSDKKotlinThrowable * _Nullable)cause SWIFT_UNAVAILABLE;
+@end
+
+@class MedalliaDigitalFeedbackInitConfigBuilder;
+@class MedalliaDigitalLoggingConfigBuilder;
+@class MedalliaDigitalFeedbackStartConfigBuilder;
+/// Entry point for configuring Medallia Digital Feedback via the Unified API.
+/// Provides a factory method for the initialization configuration builder.
+/// This is the iOS equivalent of the Android <code>MedalliaDigitalFeedback</code> object,
+/// providing Obj-C-friendly access to builder creation.
+/// Swift users should prefer the DSL extensions on
+/// <code>MedalliaFeedbackInitializationConfiguration</code> (via
+/// <code>Medallia.feedback.initializationConfiguration.buildOrThrow { ... }</code>).
+/// ObjC users use this class:
+/// \code
+/// MedalliaDigitalFeedbackInitConfigBuilder *builder =
+///     [MedalliaDigitalFeedback makeInitConfigBuilder];
+///
+/// \endcode
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK23MedalliaDigitalFeedback")
+@interface MedalliaDigitalFeedback : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+/// Creates a new builder for Digital Feedback initialization configuration.
+///
+/// returns:
+/// A new <code>MedalliaDigitalFeedbackInitConfigBuilder</code> instance.
++ (MedalliaDigitalFeedbackInitConfigBuilder * _Nonnull)makeInitConfigBuilder SWIFT_WARN_UNUSED_RESULT;
+/// Creates a new builder for Digital Feedback logging configuration.
+/// ObjC usage:
+/// \code
+/// MedalliaDigitalLoggingConfigBuilder *builder =
+///     [MedalliaDigitalFeedback makeLoggingConfigBuilder];
+/// builder.level = MedalliaLogLevelDebug;
+/// [builder buildOrThrowAndReturnError:nil];
+///
+/// \endcode
+/// returns:
+/// A new <code>MedalliaDigitalLoggingConfigBuilder</code> instance.
++ (MedalliaDigitalLoggingConfigBuilder * _Nonnull)makeLoggingConfigBuilder SWIFT_WARN_UNUSED_RESULT;
+/// Creates a new builder for Digital Feedback start configuration.
+///
+/// returns:
+/// A new <code>MedalliaDigitalFeedbackStartConfigBuilder</code> instance.
++ (MedalliaDigitalFeedbackStartConfigBuilder * _Nonnull)makeStartConfigBuilder SWIFT_WARN_UNUSED_RESULT;
+@end
+
+@protocol MedalliaResult;
+/// Builder for <code>MedalliaFeedbackInitializationConfiguration</code> targeting the
+/// Digital feedback engine.
+/// Usage (DSL — preferred):
+/// \code
+/// let config = try Medallia.feedback.initializationConfiguration.buildOrThrow { builder in
+///     builder.token = "your-developer-token"
+/// }
+/// let result = try await Medallia.initialize(config: config)
+///
+/// \endcodeUsage (fluent chaining):
+/// \code
+/// let config = try MedalliaDigitalFeedbackInitConfigBuilder()
+///     .token("your-developer-token")
+///     .buildOrThrow()
+///
+/// \endcode
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK40MedalliaDigitalFeedbackInitConfigBuilder")
+@interface MedalliaDigitalFeedbackInitConfigBuilder : NSObject <MedalliaBuilder>
+/// The Medallia Digital developer token. <em>Required.</em>
+/// Can be set directly (DSL style) or via the chainable <code>token(_:)</code> method.
+@property (nonatomic, copy) NSString * _Nullable token;
+/// Sets the Medallia Digital developer token.
+/// The token is assigned per application and can be found in the account
+/// section of the Medallia Digital dashboard.
+/// \param token The developer token. Must not be blank.
+///
+///
+/// returns:
+/// This builder instance for chaining.
+- (MedalliaDigitalFeedbackInitConfigBuilder * _Nonnull)token:(NSString * _Nonnull)token;
+/// Builds the configuration, returning a <code>MedalliaResult</code> that encapsulates
+/// either the validated configuration or a validation error.
+///
+/// returns:
+/// <code>MedalliaResult.success</code> containing a
+/// <code>MedalliaFeedbackInitializationConfiguration</code>, or
+/// <code>MedalliaResult.failure</code> containing a
+/// <code>MedalliaDigitalConfigValidationException</code>.
+- (id <MedalliaResult> _Nonnull)build SWIFT_WARN_UNUSED_RESULT;
+/// Builds and validates the configuration, throwing on failure.
+///
+/// throws:
+/// <code>MedalliaDigitalConfigValidationException</code> if the token is
+/// missing or blank.
+///
+/// returns:
+/// A fully-validated <code>MedalliaFeedbackInitializationConfiguration</code>.
+- (id _Nullable)buildOrThrowAndReturnError:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
+/// Attempts to build the configuration, returning <code>nil</code> on validation failure.
+///
+/// returns:
+/// A <code>MedalliaFeedbackInitializationConfiguration</code> if valid,
+/// or <code>nil</code>.
+- (id _Nullable)buildOrNull SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+/// Builder for <code>MedalliaFeedbackStartConfiguration</code> targeting the Digital feedback engine.
+/// Usage (DSL — preferred):
+/// \code
+/// let config = try Medallia.feedback.startConfiguration.buildOrThrow { builder in
+///     builder.token = "your-developer-token"
+/// }
+/// let result = try await Medallia.start(config: config)
+///
+/// \endcode
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK41MedalliaDigitalFeedbackStartConfigBuilder")
+@interface MedalliaDigitalFeedbackStartConfigBuilder : NSObject <MedalliaBuilder>
+/// The Medallia Digital developer token.
+/// Optional for standard <code>build*</code> and <code>buildWithInit*</code> when the SDK was already initialized
+/// (token is read from <code>Identity</code>). Supply explicitly for start-only or combined flows without
+/// a prior <code>Medallia.initialize</code>.
+@property (nonatomic, copy) NSString * _Nullable token;
+- (MedalliaDigitalFeedbackStartConfigBuilder * _Nonnull)token:(NSString * _Nonnull)token;
+- (id <MedalliaResult> _Nonnull)build SWIFT_WARN_UNUSED_RESULT;
+- (id _Nullable)buildOrThrowAndReturnError:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
+- (id _Nullable)buildOrNull SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+/// Base class for Digital feedback engine initialization failures.
+/// Each subclass describes a specific failure condition so consumers can
+/// pattern-match on the error type. Maps legacy <code>MDExternalError</code> codes to
+/// typed exceptions.
+/// Mirrors Android’s sealed <code>MedalliaDigitalInitializationException</code> class.
+/// Since Swift lacks sealed classes, this uses a class hierarchy with
+/// <code>internal</code> initializers to prevent external subclassing.
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK38MedalliaDigitalInitializationException")
+@interface MedalliaDigitalInitializationException : MedalliaFeedbackException
+- (nonnull instancetype)initWithMessage:(NSString * _Nullable)message cause:(MSDKKotlinThrowable * _Nullable)cause SWIFT_UNAVAILABLE;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK37MedalliaDigitalInitAlreadyInitialized")
+@interface MedalliaDigitalInitAlreadyInitialized : MedalliaDigitalInitializationException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK38MedalliaDigitalInitAuthorizationFailed")
+@interface MedalliaDigitalInitAuthorizationFailed : MedalliaDigitalInitializationException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK37MedalliaDigitalInitConfigurationError")
+@interface MedalliaDigitalInitConfigurationError : MedalliaDigitalInitializationException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK33MedalliaDigitalInitCoreDataFailed")
+@interface MedalliaDigitalInitCoreDataFailed : MedalliaDigitalInitializationException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK29MedalliaDigitalInitInProgress")
+@interface MedalliaDigitalInitInProgress : MedalliaDigitalInitializationException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK32MedalliaDigitalInitInternalError")
+@interface MedalliaDigitalInitInternalError : MedalliaDigitalInitializationException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK31MedalliaDigitalInitInvalidToken")
+@interface MedalliaDigitalInitInvalidToken : MedalliaDigitalInitializationException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK37MedalliaDigitalInitNetworkUnavailable")
+@interface MedalliaDigitalInitNetworkUnavailable : MedalliaDigitalInitializationException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK28MedalliaDigitalInitSdkKilled")
+@interface MedalliaDigitalInitSdkKilled : MedalliaDigitalInitializationException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK29MedalliaDigitalInitSdkStopped")
+@interface MedalliaDigitalInitSdkStopped : MedalliaDigitalInitializationException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK36MedalliaDigitalInitUnsupportedDevice")
+@interface MedalliaDigitalInitUnsupportedDevice : MedalliaDigitalInitializationException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK32MedalliaDigitalInitWrongPlatform")
+@interface MedalliaDigitalInitWrongPlatform : MedalliaDigitalInitializationException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+@class MedalliaLogLevel;
+/// Builder for <code>MedalliaFeedbackLoggingConfiguration</code> targeting the Digital
+/// feedback engine.
+/// Usage (DSL — preferred):
+/// \code
+/// let config = try Medallia.feedback.loggingConfiguration.buildOrThrow { builder in
+///     builder.level = .info
+/// }
+/// try await Medallia.logging.setConfiguration(config: config)
+///
+/// \endcodeUsage (fluent chaining):
+/// \code
+/// let config = try MedalliaDigitalLoggingConfigBuilder()
+///     .level(.error)
+///     .buildOrThrow()
+///
+/// \endcode
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK35MedalliaDigitalLoggingConfigBuilder")
+@interface MedalliaDigitalLoggingConfigBuilder : NSObject <MedalliaBuilder>
+/// Single log level for the configured scope. Defaults to <code>.none</code>.
+@property (nonatomic) MedalliaLogLevel * _Nonnull level;
+/// Optional explicit set of log levels. When non-empty, overrides [level].
+@property (nonatomic, copy) NSSet<MedalliaLogLevel *> * _Nonnull levels;
+/// Sets the single log level.
+- (MedalliaDigitalLoggingConfigBuilder * _Nonnull)level:(MedalliaLogLevel * _Nonnull)level;
+/// Builds the logging configuration, returning a <code>MedalliaResult</code>.
+- (id <MedalliaResult> _Nonnull)build SWIFT_WARN_UNUSED_RESULT;
+/// Builds the logging configuration, throwing on failure.
+- (id _Nullable)buildOrThrowAndReturnError:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
+/// Attempts to build the logging configuration, returning <code>nil</code> on failure.
+- (id _Nullable)buildOrNull SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+/// Base class for Digital feedback engine start failures.
+/// Maps legacy <code>MDExternalError</code> codes to typed exceptions for <code>Medallia.start</code>.
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK29MedalliaDigitalStartException")
+@interface MedalliaDigitalStartException : MedalliaStartException
+- (nonnull instancetype)initWithMessage:(NSString * _Nullable)message cause:(MSDKKotlinThrowable * _Nullable)cause SWIFT_UNAVAILABLE;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK34MedalliaDigitalStartAlreadyStarted")
+@interface MedalliaDigitalStartAlreadyStarted : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK39MedalliaDigitalStartAuthorizationFailed")
+@interface MedalliaDigitalStartAuthorizationFailed : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK38MedalliaDigitalStartConfigurationError")
+@interface MedalliaDigitalStartConfigurationError : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK34MedalliaDigitalStartCoreDataFailed")
+@interface MedalliaDigitalStartCoreDataFailed : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK30MedalliaDigitalStartInProgress")
+@interface MedalliaDigitalStartInProgress : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK33MedalliaDigitalStartInternalError")
+@interface MedalliaDigitalStartInternalError : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK32MedalliaDigitalStartInvalidToken")
+@interface MedalliaDigitalStartInvalidToken : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK38MedalliaDigitalStartNetworkUnavailable")
+@interface MedalliaDigitalStartNetworkUnavailable : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK29MedalliaDigitalStartSdkKilled")
+@interface MedalliaDigitalStartSdkKilled : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK37MedalliaDigitalStartSdkNotInitialized")
+@interface MedalliaDigitalStartSdkNotInitialized : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK30MedalliaDigitalStartSdkStopped")
+@interface MedalliaDigitalStartSdkStopped : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK37MedalliaDigitalStartUnsupportedDevice")
+@interface MedalliaDigitalStartUnsupportedDevice : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK33MedalliaDigitalStartWrongPlatform")
+@interface MedalliaDigitalStartWrongPlatform : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
 @end
 
 @interface UNNotificationContent (SWIFT_EXTENSION(MedalliaDigitalSDK))
@@ -1590,6 +1925,7 @@ extern "C" {
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
 @import Foundation;
+@import MedalliaSDK;
 @import ObjectiveC;
 @import UserNotifications;
 #endif
@@ -2334,13 +2670,31 @@ SWIFT_CLASS("_TtC18MedalliaDigitalSDK15MedalliaDigital")
 /// This method initializes the SDK and by doing so authenticates the app, and retrieves configuration elements from Medallia Digital.
 /// <em>This method is mandatory in order to start Medallia SDK</em>
 /// All the following vars are mandatory for init to run.
-/// \param token Medallia Digital developer token (can be found in the account section of your Medallia Digital dashboard). Note that this key is assigned per application.
+/// important:
+/// Deprecated. Use the Unified API initialize configuration instead.
+/// <h3>Swift Implementation</h3>
+/// \code
+/// let config = Medallia.feedback.initializationConfiguration.buildOrNull { builder in
+///     builder.token = "your-token-here"
+/// }
+///
+/// Medallia.initialize(config: config)
+///
+/// \endcode<h3>Objective-C Implementation</h3>
+/// \code
+/// MedalliaFeedbackInitializationConfiguration *config = [Medallia.feedback.initializationConfiguration buildOrNull:^(id<MedalliaFeedbackInitializationConfigurationBuilder> builder) {
+///     builder.token = @"your-token-here";
+/// }];
+///
+/// [Medallia initializeWithConfig:config];
+///
+/// \endcode\param token Medallia Digital developer token (can be found in the account section of your Medallia Digital dashboard). Note that this key is assigned per application.
 ///
 /// \param success Success Closure
 ///
 /// \param failure Failure Closure
 ///
-+ (void)sdkInitWithToken:(NSString * _Nonnull)token success:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(MDExternalError * _Nonnull))failure;
++ (void)sdkInitWithToken:(NSString * _Nonnull)token success:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(MDExternalError * _Nonnull))failure SWIFT_DEPRECATED_MSG("Use the Unified API initialize configuration instead.");
 /// The SDK enables the app to set custom parameters of several types. Define specific parameter to add to the submitted feedback and targeting. * If the name specified already exists, it will be overridden.
 /// The SDK supports the following types: String, Integer(or int), Long(or long), Double(or double), Float(or float), Boolean(or bool)
 /// In case the value is not one of these primitive types, custom parameter won’t be saved.
@@ -2417,9 +2771,11 @@ SWIFT_CLASS("_TtC18MedalliaDigitalSDK15MedalliaDigital")
 /// Default log level in the SDK is .off
 /// Note: if you choose log level = .off, there will be no logs at all
 /// It is highly recommended to get log level .off when App is in production/Appstore
+/// important:
+/// Deprecated. Use the Unified API logging configuration instead.
 /// \param logLevel log level to determine which logs will be printed to the console
 ///
-+ (void)setLogLevel:(enum MDLogLevel)logLevel;
++ (void)setLogLevel:(enum MDLogLevel)logLevel SWIFT_DEPRECATED_MSG("Use the Unified API logging configuration instead.");
 /// Stop SDK API will stop the SDK functionality.
 /// In case the API is been called with #clearData parameter true, personalized SDK data will be cleared.
 /// \param clearData clear data determines if the personalized data should be cleared in addition to stopping the SDK
@@ -2469,6 +2825,320 @@ SWIFT_CLASS("_TtC18MedalliaDigitalSDK15MedalliaDigital")
 /// returns:
 /// MDCustomFormData
 + (MDCustomFormData * _Nullable)getCustomFormData:(NSString * _Nonnull)formId SWIFT_WARN_UNUSED_RESULT;
+@end
+
+@class MSDKKotlinThrowable;
+/// A required configuration field was missing or invalid when building a
+/// <code>MedalliaFeedbackInitializationConfiguration</code>.
+/// Returned inside <code>MedalliaResult.failure</code> from builder methods when
+/// validation fails before initialization is attempted.
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK40MedalliaDigitalConfigValidationException")
+@interface MedalliaDigitalConfigValidationException : MedalliaFeedbackException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+- (nonnull instancetype)initWithMessage:(NSString * _Nullable)message cause:(MSDKKotlinThrowable * _Nullable)cause SWIFT_UNAVAILABLE;
+@end
+
+@class MedalliaDigitalFeedbackInitConfigBuilder;
+@class MedalliaDigitalLoggingConfigBuilder;
+@class MedalliaDigitalFeedbackStartConfigBuilder;
+/// Entry point for configuring Medallia Digital Feedback via the Unified API.
+/// Provides a factory method for the initialization configuration builder.
+/// This is the iOS equivalent of the Android <code>MedalliaDigitalFeedback</code> object,
+/// providing Obj-C-friendly access to builder creation.
+/// Swift users should prefer the DSL extensions on
+/// <code>MedalliaFeedbackInitializationConfiguration</code> (via
+/// <code>Medallia.feedback.initializationConfiguration.buildOrThrow { ... }</code>).
+/// ObjC users use this class:
+/// \code
+/// MedalliaDigitalFeedbackInitConfigBuilder *builder =
+///     [MedalliaDigitalFeedback makeInitConfigBuilder];
+///
+/// \endcode
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK23MedalliaDigitalFeedback")
+@interface MedalliaDigitalFeedback : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+/// Creates a new builder for Digital Feedback initialization configuration.
+///
+/// returns:
+/// A new <code>MedalliaDigitalFeedbackInitConfigBuilder</code> instance.
++ (MedalliaDigitalFeedbackInitConfigBuilder * _Nonnull)makeInitConfigBuilder SWIFT_WARN_UNUSED_RESULT;
+/// Creates a new builder for Digital Feedback logging configuration.
+/// ObjC usage:
+/// \code
+/// MedalliaDigitalLoggingConfigBuilder *builder =
+///     [MedalliaDigitalFeedback makeLoggingConfigBuilder];
+/// builder.level = MedalliaLogLevelDebug;
+/// [builder buildOrThrowAndReturnError:nil];
+///
+/// \endcode
+/// returns:
+/// A new <code>MedalliaDigitalLoggingConfigBuilder</code> instance.
++ (MedalliaDigitalLoggingConfigBuilder * _Nonnull)makeLoggingConfigBuilder SWIFT_WARN_UNUSED_RESULT;
+/// Creates a new builder for Digital Feedback start configuration.
+///
+/// returns:
+/// A new <code>MedalliaDigitalFeedbackStartConfigBuilder</code> instance.
++ (MedalliaDigitalFeedbackStartConfigBuilder * _Nonnull)makeStartConfigBuilder SWIFT_WARN_UNUSED_RESULT;
+@end
+
+@protocol MedalliaResult;
+/// Builder for <code>MedalliaFeedbackInitializationConfiguration</code> targeting the
+/// Digital feedback engine.
+/// Usage (DSL — preferred):
+/// \code
+/// let config = try Medallia.feedback.initializationConfiguration.buildOrThrow { builder in
+///     builder.token = "your-developer-token"
+/// }
+/// let result = try await Medallia.initialize(config: config)
+///
+/// \endcodeUsage (fluent chaining):
+/// \code
+/// let config = try MedalliaDigitalFeedbackInitConfigBuilder()
+///     .token("your-developer-token")
+///     .buildOrThrow()
+///
+/// \endcode
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK40MedalliaDigitalFeedbackInitConfigBuilder")
+@interface MedalliaDigitalFeedbackInitConfigBuilder : NSObject <MedalliaBuilder>
+/// The Medallia Digital developer token. <em>Required.</em>
+/// Can be set directly (DSL style) or via the chainable <code>token(_:)</code> method.
+@property (nonatomic, copy) NSString * _Nullable token;
+/// Sets the Medallia Digital developer token.
+/// The token is assigned per application and can be found in the account
+/// section of the Medallia Digital dashboard.
+/// \param token The developer token. Must not be blank.
+///
+///
+/// returns:
+/// This builder instance for chaining.
+- (MedalliaDigitalFeedbackInitConfigBuilder * _Nonnull)token:(NSString * _Nonnull)token;
+/// Builds the configuration, returning a <code>MedalliaResult</code> that encapsulates
+/// either the validated configuration or a validation error.
+///
+/// returns:
+/// <code>MedalliaResult.success</code> containing a
+/// <code>MedalliaFeedbackInitializationConfiguration</code>, or
+/// <code>MedalliaResult.failure</code> containing a
+/// <code>MedalliaDigitalConfigValidationException</code>.
+- (id <MedalliaResult> _Nonnull)build SWIFT_WARN_UNUSED_RESULT;
+/// Builds and validates the configuration, throwing on failure.
+///
+/// throws:
+/// <code>MedalliaDigitalConfigValidationException</code> if the token is
+/// missing or blank.
+///
+/// returns:
+/// A fully-validated <code>MedalliaFeedbackInitializationConfiguration</code>.
+- (id _Nullable)buildOrThrowAndReturnError:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
+/// Attempts to build the configuration, returning <code>nil</code> on validation failure.
+///
+/// returns:
+/// A <code>MedalliaFeedbackInitializationConfiguration</code> if valid,
+/// or <code>nil</code>.
+- (id _Nullable)buildOrNull SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+/// Builder for <code>MedalliaFeedbackStartConfiguration</code> targeting the Digital feedback engine.
+/// Usage (DSL — preferred):
+/// \code
+/// let config = try Medallia.feedback.startConfiguration.buildOrThrow { builder in
+///     builder.token = "your-developer-token"
+/// }
+/// let result = try await Medallia.start(config: config)
+///
+/// \endcode
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK41MedalliaDigitalFeedbackStartConfigBuilder")
+@interface MedalliaDigitalFeedbackStartConfigBuilder : NSObject <MedalliaBuilder>
+/// The Medallia Digital developer token.
+/// Optional for standard <code>build*</code> and <code>buildWithInit*</code> when the SDK was already initialized
+/// (token is read from <code>Identity</code>). Supply explicitly for start-only or combined flows without
+/// a prior <code>Medallia.initialize</code>.
+@property (nonatomic, copy) NSString * _Nullable token;
+- (MedalliaDigitalFeedbackStartConfigBuilder * _Nonnull)token:(NSString * _Nonnull)token;
+- (id <MedalliaResult> _Nonnull)build SWIFT_WARN_UNUSED_RESULT;
+- (id _Nullable)buildOrThrowAndReturnError:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
+- (id _Nullable)buildOrNull SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+/// Base class for Digital feedback engine initialization failures.
+/// Each subclass describes a specific failure condition so consumers can
+/// pattern-match on the error type. Maps legacy <code>MDExternalError</code> codes to
+/// typed exceptions.
+/// Mirrors Android’s sealed <code>MedalliaDigitalInitializationException</code> class.
+/// Since Swift lacks sealed classes, this uses a class hierarchy with
+/// <code>internal</code> initializers to prevent external subclassing.
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK38MedalliaDigitalInitializationException")
+@interface MedalliaDigitalInitializationException : MedalliaFeedbackException
+- (nonnull instancetype)initWithMessage:(NSString * _Nullable)message cause:(MSDKKotlinThrowable * _Nullable)cause SWIFT_UNAVAILABLE;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK37MedalliaDigitalInitAlreadyInitialized")
+@interface MedalliaDigitalInitAlreadyInitialized : MedalliaDigitalInitializationException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK38MedalliaDigitalInitAuthorizationFailed")
+@interface MedalliaDigitalInitAuthorizationFailed : MedalliaDigitalInitializationException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK37MedalliaDigitalInitConfigurationError")
+@interface MedalliaDigitalInitConfigurationError : MedalliaDigitalInitializationException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK33MedalliaDigitalInitCoreDataFailed")
+@interface MedalliaDigitalInitCoreDataFailed : MedalliaDigitalInitializationException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK29MedalliaDigitalInitInProgress")
+@interface MedalliaDigitalInitInProgress : MedalliaDigitalInitializationException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK32MedalliaDigitalInitInternalError")
+@interface MedalliaDigitalInitInternalError : MedalliaDigitalInitializationException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK31MedalliaDigitalInitInvalidToken")
+@interface MedalliaDigitalInitInvalidToken : MedalliaDigitalInitializationException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK37MedalliaDigitalInitNetworkUnavailable")
+@interface MedalliaDigitalInitNetworkUnavailable : MedalliaDigitalInitializationException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK28MedalliaDigitalInitSdkKilled")
+@interface MedalliaDigitalInitSdkKilled : MedalliaDigitalInitializationException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK29MedalliaDigitalInitSdkStopped")
+@interface MedalliaDigitalInitSdkStopped : MedalliaDigitalInitializationException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK36MedalliaDigitalInitUnsupportedDevice")
+@interface MedalliaDigitalInitUnsupportedDevice : MedalliaDigitalInitializationException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK32MedalliaDigitalInitWrongPlatform")
+@interface MedalliaDigitalInitWrongPlatform : MedalliaDigitalInitializationException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+@class MedalliaLogLevel;
+/// Builder for <code>MedalliaFeedbackLoggingConfiguration</code> targeting the Digital
+/// feedback engine.
+/// Usage (DSL — preferred):
+/// \code
+/// let config = try Medallia.feedback.loggingConfiguration.buildOrThrow { builder in
+///     builder.level = .info
+/// }
+/// try await Medallia.logging.setConfiguration(config: config)
+///
+/// \endcodeUsage (fluent chaining):
+/// \code
+/// let config = try MedalliaDigitalLoggingConfigBuilder()
+///     .level(.error)
+///     .buildOrThrow()
+///
+/// \endcode
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK35MedalliaDigitalLoggingConfigBuilder")
+@interface MedalliaDigitalLoggingConfigBuilder : NSObject <MedalliaBuilder>
+/// Single log level for the configured scope. Defaults to <code>.none</code>.
+@property (nonatomic) MedalliaLogLevel * _Nonnull level;
+/// Optional explicit set of log levels. When non-empty, overrides [level].
+@property (nonatomic, copy) NSSet<MedalliaLogLevel *> * _Nonnull levels;
+/// Sets the single log level.
+- (MedalliaDigitalLoggingConfigBuilder * _Nonnull)level:(MedalliaLogLevel * _Nonnull)level;
+/// Builds the logging configuration, returning a <code>MedalliaResult</code>.
+- (id <MedalliaResult> _Nonnull)build SWIFT_WARN_UNUSED_RESULT;
+/// Builds the logging configuration, throwing on failure.
+- (id _Nullable)buildOrThrowAndReturnError:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
+/// Attempts to build the logging configuration, returning <code>nil</code> on failure.
+- (id _Nullable)buildOrNull SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+/// Base class for Digital feedback engine start failures.
+/// Maps legacy <code>MDExternalError</code> codes to typed exceptions for <code>Medallia.start</code>.
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK29MedalliaDigitalStartException")
+@interface MedalliaDigitalStartException : MedalliaStartException
+- (nonnull instancetype)initWithMessage:(NSString * _Nullable)message cause:(MSDKKotlinThrowable * _Nullable)cause SWIFT_UNAVAILABLE;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK34MedalliaDigitalStartAlreadyStarted")
+@interface MedalliaDigitalStartAlreadyStarted : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK39MedalliaDigitalStartAuthorizationFailed")
+@interface MedalliaDigitalStartAuthorizationFailed : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK38MedalliaDigitalStartConfigurationError")
+@interface MedalliaDigitalStartConfigurationError : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK34MedalliaDigitalStartCoreDataFailed")
+@interface MedalliaDigitalStartCoreDataFailed : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK30MedalliaDigitalStartInProgress")
+@interface MedalliaDigitalStartInProgress : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK33MedalliaDigitalStartInternalError")
+@interface MedalliaDigitalStartInternalError : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK32MedalliaDigitalStartInvalidToken")
+@interface MedalliaDigitalStartInvalidToken : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK38MedalliaDigitalStartNetworkUnavailable")
+@interface MedalliaDigitalStartNetworkUnavailable : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK29MedalliaDigitalStartSdkKilled")
+@interface MedalliaDigitalStartSdkKilled : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK37MedalliaDigitalStartSdkNotInitialized")
+@interface MedalliaDigitalStartSdkNotInitialized : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK30MedalliaDigitalStartSdkStopped")
+@interface MedalliaDigitalStartSdkStopped : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK37MedalliaDigitalStartUnsupportedDevice")
+@interface MedalliaDigitalStartUnsupportedDevice : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
+@end
+
+SWIFT_CLASS("_TtC18MedalliaDigitalSDK33MedalliaDigitalStartWrongPlatform")
+@interface MedalliaDigitalStartWrongPlatform : MedalliaDigitalStartException
+@property (nonatomic, readonly, copy) NSString * _Nonnull recoverySuggestion;
 @end
 
 @interface UNNotificationContent (SWIFT_EXTENSION(MedalliaDigitalSDK))
