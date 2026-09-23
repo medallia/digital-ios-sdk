@@ -25029,28 +25029,28 @@
     {
       "filePath": "\/Users\/jenkins\/workspace\/gital_Mobile_MobileSDK-iOS_v4.11\/MobileSDK\/Model\/CustomForm\/CustomFormComponent.swift",
       "kind": "StringLiteral",
-      "offset": 2093,
+      "offset": 2096,
       "length": 14,
       "value": "\"custom-param\""
     },
     {
       "filePath": "\/Users\/jenkins\/workspace\/gital_Mobile_MobileSDK-iOS_v4.11\/MobileSDK\/Model\/CustomForm\/CustomFormComponent.swift",
       "kind": "StringLiteral",
-      "offset": 2751,
+      "offset": 2754,
       "length": 12,
       "value": "\"RANDOM_ALL\""
     },
     {
       "filePath": "\/Users\/jenkins\/workspace\/gital_Mobile_MobileSDK-iOS_v4.11\/MobileSDK\/Model\/CustomForm\/CustomFormComponent.swift",
       "kind": "StringLiteral",
-      "offset": 2795,
+      "offset": 2798,
       "length": 24,
       "value": "\"RANDOM_EXCEPT_FOR_LAST\""
     },
     {
       "filePath": "\/Users\/jenkins\/workspace\/gital_Mobile_MobileSDK-iOS_v4.11\/MobileSDK\/Model\/CustomForm\/CustomFormComponent.swift",
       "kind": "StringLiteral",
-      "offset": 2836,
+      "offset": 2839,
       "length": 6,
       "value": "\"NONE\""
     },
@@ -25371,10 +25371,10 @@
     },
     {
       "filePath": "\/Users\/jenkins\/workspace\/gital_Mobile_MobileSDK-iOS_v4.11\/MobileSDK\/Components\/BridgeService\/BridgeService.swift",
-      "kind": "StringLiteral",
-      "offset": 270,
-      "length": 13,
-      "value": "\"MedalliaDigitalSDK.BridgeService\""
+      "kind": "IntegerLiteral",
+      "offset": 970,
+      "length": 1,
+      "value": "0"
     },
     {
       "filePath": "\/Users\/jenkins\/workspace\/gital_Mobile_MobileSDK-iOS_v4.11\/MobileSDK\/Components\/Operations\/Templates\/LoadTemplatesOperation.swift",
@@ -26233,30 +26233,58 @@
     {
       "filePath": "\/Users\/jenkins\/workspace\/gital_Mobile_MobileSDK-iOS_v4.11\/MobileSDK\/Components\/BannerView\/MDUIBaseBannerView.swift",
       "kind": "BooleanLiteral",
-      "offset": 968,
+      "offset": 1185,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jenkins\/workspace\/gital_Mobile_MobileSDK-iOS_v4.11\/MobileSDK\/Components\/BannerView\/MDUIBaseBannerView.swift",
       "kind": "BooleanLiteral",
-      "offset": 1080,
+      "offset": 1297,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jenkins\/workspace\/gital_Mobile_MobileSDK-iOS_v4.11\/MobileSDK\/Components\/BannerView\/MDUIBaseBannerView.swift",
       "kind": "IntegerLiteral",
-      "offset": 1135,
+      "offset": 1352,
       "length": 1,
       "value": "5"
     },
     {
       "filePath": "\/Users\/jenkins\/workspace\/gital_Mobile_MobileSDK-iOS_v4.11\/MobileSDK\/Components\/BannerView\/MDUIBaseBannerView.swift",
       "kind": "IntegerLiteral",
-      "offset": 1187,
+      "offset": 1408,
       "length": 2,
       "value": "40"
+    },
+    {
+      "filePath": "\/Users\/jenkins\/workspace\/gital_Mobile_MobileSDK-iOS_v4.11\/MobileSDK\/Components\/BannerView\/MDUIBaseBannerView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1468,
+      "length": 2,
+      "value": "28"
+    },
+    {
+      "filePath": "\/Users\/jenkins\/workspace\/gital_Mobile_MobileSDK-iOS_v4.11\/MobileSDK\/Components\/BannerView\/MDUIBaseBannerView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1787,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/jenkins\/workspace\/gital_Mobile_MobileSDK-iOS_v4.11\/MobileSDK\/Components\/BannerView\/MDUIBaseBannerView.swift",
+      "kind": "FloatLiteral",
+      "offset": 5844,
+      "length": 4,
+      "value": "0.25"
+    },
+    {
+      "filePath": "\/Users\/jenkins\/workspace\/gital_Mobile_MobileSDK-iOS_v4.11\/MobileSDK\/Components\/BannerView\/MDUIBaseBannerView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 6790,
+      "length": 2,
+      "value": "30"
     },
     {
       "filePath": "\/Users\/jenkins\/workspace\/gital_Mobile_MobileSDK-iOS_v4.11\/MobileSDK\/Components\/Collectors\/PollingCollectors\/DeviceVendorCollector.swift",
@@ -27360,70 +27388,70 @@
     {
       "filePath": "\/Users\/jenkins\/workspace\/gital_Mobile_MobileSDK-iOS_v4.11\/MobileSDK\/Components\/BannerView\/MDUIBannerView.swift",
       "kind": "BooleanLiteral",
-      "offset": 17140,
+      "offset": 18018,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jenkins\/workspace\/gital_Mobile_MobileSDK-iOS_v4.11\/MobileSDK\/Components\/BannerView\/MDUIBannerView.swift",
       "kind": "IntegerLiteral",
-      "offset": 17250,
+      "offset": 18128,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jenkins\/workspace\/gital_Mobile_MobileSDK-iOS_v4.11\/MobileSDK\/Components\/BannerView\/MDUIBannerView.swift",
       "kind": "IntegerLiteral",
-      "offset": 17350,
+      "offset": 18228,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jenkins\/workspace\/gital_Mobile_MobileSDK-iOS_v4.11\/MobileSDK\/Components\/BannerView\/MDUIBannerView.swift",
       "kind": "IntegerLiteral",
-      "offset": 17493,
+      "offset": 18371,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jenkins\/workspace\/gital_Mobile_MobileSDK-iOS_v4.11\/MobileSDK\/Components\/BannerView\/MDUIBannerView.swift",
       "kind": "IntegerLiteral",
-      "offset": 17593,
+      "offset": 18471,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jenkins\/workspace\/gital_Mobile_MobileSDK-iOS_v4.11\/MobileSDK\/Components\/BannerView\/MDUIBannerView.swift",
       "kind": "BooleanLiteral",
-      "offset": 17793,
+      "offset": 18671,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/jenkins\/workspace\/gital_Mobile_MobileSDK-iOS_v4.11\/MobileSDK\/Components\/BannerView\/MDUIBannerView.swift",
       "kind": "IntegerLiteral",
-      "offset": 17885,
+      "offset": 18763,
       "length": 1,
       "value": "3"
     },
     {
       "filePath": "\/Users\/jenkins\/workspace\/gital_Mobile_MobileSDK-iOS_v4.11\/MobileSDK\/Components\/BannerView\/MDUIBannerView.swift",
       "kind": "BooleanLiteral",
-      "offset": 17937,
+      "offset": 18815,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/jenkins\/workspace\/gital_Mobile_MobileSDK-iOS_v4.11\/MobileSDK\/Components\/BannerView\/MDUIBannerView.swift",
       "kind": "BooleanLiteral",
-      "offset": 18059,
+      "offset": 18937,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/jenkins\/workspace\/gital_Mobile_MobileSDK-iOS_v4.11\/MobileSDK\/Components\/BannerView\/MDUIBannerView.swift",
       "kind": "IntegerLiteral",
-      "offset": 18108,
+      "offset": 18986,
       "length": 1,
       "value": "0"
     },
