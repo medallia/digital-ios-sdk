@@ -9,12 +9,12 @@
 # EXPANDED_CODE_SIGN_IDENTITY
 
 
-# Signs a framework with the provided identity
+# Signs a framework with the Medallia Distribution identity
 code_sign() {
-  # Use the current code_sign_identitiy
-  echo "Code Signing $1 with Identity ${EXPANDED_CODE_SIGN_IDENTITY_NAME}"
-  echo "/usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} --preserve-metadata=identifier,entitlements $1"
-  /usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} --preserve-metadata=identifier,entitlements "$1"
+  local SIGN_IDENTITY="Apple Distribution: Medallia, Inc. (375EPY5652)"
+  echo "Code Signing $1 with Identity ${SIGN_IDENTITY}"
+  echo "/usr/bin/codesign --force --sign \"${SIGN_IDENTITY}\" $1"
+  /usr/bin/codesign --force --sign "${SIGN_IDENTITY}" "$1"
 }
 
 # Set working directory to product’s embedded frameworks 
@@ -35,8 +35,9 @@ for file in $(find . -type f -perm +111); do
   if ! [[ "$(file "$file")" == *"dynamically linked shared library"* ]]; then
     continue
   fi
-  # Skip non MedalliaDigitalSDK libraries
-  if ! [[ "$(basename $file)" == *"MedalliaDigitalSDK"* ]]; then
+  # Skip non Medallia libraries
+  if ! [[ "$(basename $file)" == *"MedalliaDigitalSDK"* ]] && \
+     ! [[ "$(basename $file)" == *"MedalliaSDKEventBusInternal"* ]]; then
     continue
   fi
   # Get architectures for current file
