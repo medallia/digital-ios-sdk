@@ -431,7 +431,7 @@ SWIFT_CLASS("_TtC18MedalliaDigitalSDK16MDCustomFormData")
 SWIFT_PROTOCOL("_TtP18MedalliaDigitalSDK20MDCustomFormDelegate_")
 @protocol MDCustomFormDelegate
 @optional
-/// This event is triggered when user accepted the invitet to leave a feedback.
+/// This event is triggered when the user accepted the invite to leave feedback.
 /// \param formDelegateData MDFormDelegateData object that contains:
 /// <ul>
 ///   <li>
@@ -454,12 +454,12 @@ SWIFT_ENUM_FWD_DECL(NSInteger, MDFormTriggerType)
 /// It contains all the necessary information to understand the context of the event and to render the form.
 SWIFT_CLASS("_TtC18MedalliaDigitalSDK24MDCustomFormDelegateData")
 @interface MDCustomFormDelegateData : NSObject
-/// The timestamp of when the form was triggered, represented as the number of seconds since the Unix epoch.
-@property (nonatomic) double timestamp;
+/// The timestamp of when the form was triggered, represented as the number of milliseconds since the Unix epoch.
+@property (nonatomic, readonly) double timestamp;
 /// A unique identifier for the form.
-@property (nonatomic, copy) NSString * _Nullable formId;
+@property (nonatomic, readonly, copy) NSString * _Nullable formId;
 /// The manner in which the form was triggered (e.g., by code, by user action).
-@property (nonatomic) enum MDFormTriggerType formTriggerType;
+@property (nonatomic, readonly) enum MDFormTriggerType formTriggerType;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -585,9 +585,9 @@ SWIFT_CLASS("_TtC18MedalliaDigitalSDK22MDFeedbackDelegateData")
 SWIFT_CLASS("_TtC18MedalliaDigitalSDK17MDFormAlternative")
 @interface MDFormAlternative : NSObject
 /// The unique identifier for this alternative. This is the value that will be submitted if this option is selected.
-@property (nonatomic, copy) NSString * _Nullable id;
+@property (nonatomic, readonly, copy) NSString * _Nonnull alternativeId;
 /// The user-facing text that describes this alternative. This is what you should display in your UI.
-@property (nonatomic, copy) NSString * _Nullable label;
+@property (nonatomic, readonly, copy) NSString * _Nonnull label;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -600,6 +600,8 @@ typedef SWIFT_ENUM(NSInteger, MDFormAlternativeOrder, open) {
   MDFormAlternativeOrderRandomExceptForLast = 1,
 /// Displays the choices in the order they were defined in the form.
   MDFormAlternativeOrderNone = 2,
+/// An unknown or unsupported alternatives order.
+  MDFormAlternativeOrderUnknown = 3,
 };
 
 /// Represents an autocomplete attribute that can be associated with a form component.
@@ -608,9 +610,9 @@ typedef SWIFT_ENUM(NSInteger, MDFormAlternativeOrder, open) {
 SWIFT_CLASS("_TtC18MedalliaDigitalSDK27MDFormAutocompleteAttribute")
 @interface MDFormAutocompleteAttribute : NSObject
 /// The actual value to be used for autocompletion. This is the value that will be submitted.
-@property (nonatomic, copy) NSString * _Nullable value;
+@property (nonatomic, readonly, copy) NSString * _Nullable value;
 /// A user-friendly label that can be displayed as a suggestion to the user.
-@property (nonatomic, copy) NSString * _Nullable label;
+@property (nonatomic, readonly, copy) NSString * _Nullable label;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -643,13 +645,11 @@ SWIFT_PROTOCOL("_TtP18MedalliaDigitalSDK15MDFormComponent_")
 /// The primary text or question associated with the component.
 @property (nonatomic, readonly, copy) NSString * _Nullable label;
 /// Controls whether the component is currently visible in the form. This can be updated dynamically based on conditional logic.
-@property (nonatomic) BOOL isVisible;
+@property (nonatomic, readonly) BOOL isVisible;
 /// The current value of the component, which can be <code>nil</code> if not set.
 @property (nonatomic, readonly) BOOL isRequired;
 /// Indicates whether the component’s current value meets all validation criteria.
 @property (nonatomic, readonly, strong) MDValidationResult * _Nonnull validation;
-/// The current value of the component, returned as <code>Any?</code>. You may need to cast this to the expected type (e.g., <code>String</code>, <code>Int</code>, <code>[String]</code>).
-@property (nonatomic, readonly) id _Nullable submittedValue;
 /// The current text for the label component, if applicable.
 @property (nonatomic, readonly, copy) NSString * _Nullable text;
 /// The URL of an image associated with the component, if applicable.
@@ -697,6 +697,8 @@ typedef SWIFT_ENUM(NSInteger, MDFormComponentType, open) {
   MDFormComponentTypeEmail = 12,
 /// A non-interactive text label used for displaying information.
   MDFormComponentTypeText = 13,
+/// An unknown or unsupported component type.
+  MDFormComponentTypeUnknown = 14,
 };
 
 @class MDFormDelegateData;
@@ -913,10 +915,26 @@ typedef SWIFT_ENUM(NSInteger, MDFormTriggerType, open) {
   MDFormTriggerTypeInvite = 1,
 };
 
+SWIFT_ENUM_FWD_DECL(NSInteger, MDImageAlignment)
+@class NSNumber;
 /// Encapsulates all visual formatting and behavioral options for a form component.
 /// Use the properties of this class to customize the appearance and interaction of a component.
 SWIFT_CLASS("_TtC18MedalliaDigitalSDK16MDFormViewFormat")
 @interface MDFormViewFormat : NSObject
+/// Obj-C accessor for <code>selectionStyle</code>, defaulting to <code>.unknown</code> when unset.
+@property (nonatomic, readonly) enum MDFormSelectionStyle objcSelectionStyle;
+/// Obj-C accessor for <code>format</code>, defaulting to <code>.unknown</code> when unset.
+@property (nonatomic, readonly) enum MDFormFormatType objcFormat;
+/// Obj-C accessor for <code>alternativesOrder</code>, defaulting to <code>.none</code> when unset.
+@property (nonatomic, readonly) enum MDFormAlternativeOrder objcAlternativesOrder;
+/// Obj-C accessor for <code>imageAlignment</code>, defaulting to <code>.unknown</code> when unset.
+@property (nonatomic, readonly) enum MDImageAlignment objcImageAlignment;
+/// Obj-C accessor for <code>showLabels</code>.
+@property (nonatomic, readonly, strong) NSNumber * _Nullable objcShowLabels;
+/// Obj-C accessor for <code>numberOfLines</code>.
+@property (nonatomic, readonly, strong) NSNumber * _Nullable objcNumberOfLines;
+/// Obj-C accessor for <code>maxLength</code>.
+@property (nonatomic, readonly, strong) NSNumber * _Nullable objcMaxLength;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -1075,7 +1093,7 @@ SWIFT_CLASS("_TtC18MedalliaDigitalSDK18MDValidationResult")
 /// Indicates whether the component’s current value is valid according to its validation rules.
 @property (nonatomic, readonly) BOOL isValid;
 /// If <code>isValid</code> is <code>false</code>, this property contains a user-friendly message explaining the validation error.
-@property (nonatomic, readonly, copy) NSString * _Nullable validationErrorMessage;
+@property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
